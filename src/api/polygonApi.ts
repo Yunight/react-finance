@@ -5,6 +5,8 @@ import {
   GroupedDailyParams,
   GroupedDailyResponse,
   SmaResponse,
+  TickerNewsParams,
+  TickerNewsResult,
 } from "@/types/types";
 
 import axios, { CancelToken } from "axios";
@@ -86,6 +88,27 @@ export async function getGroupedDaily(
       params: {
         adjusted,
         include_otc,
+        apiKey,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(`API request failed with status ${error}`);
+  }
+}
+
+export async function getTickerNews(
+  params?: TickerNewsParams
+): Promise<TickerNewsResult> {
+  const url = `${BASE_URL}v2/reference/news`;
+
+  try {
+    const response = await axios.get<TickerNewsResult>(url, {
+      params: {
+        order: "desc",
+        limit: 10,
+        ...params,
         apiKey,
       },
     });

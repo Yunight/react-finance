@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format, parseISO } from "date-fns";
+
+import { dateConvert } from "@/lib/utils";
 const TickerDetails = () => {
   const selectedTickerData = useAppSelector(
     (state) => state.ticker.selectedTicker
@@ -43,13 +44,10 @@ const TickerDetails = () => {
                 </TableCell>
                 <TableCell>
                   {key === "last_updated_utc"
-                    ? format(
-                        parseISO(
-                          selectedTickerData[
-                            key as keyof typeof selectedTickerData
-                          ] as string
-                        ),
-                        "dd-MM-yyyy"
+                    ? dateConvert(
+                        selectedTickerData[
+                          key as keyof typeof selectedTickerData
+                        ] as string
                       )
                     : key === "active"
                     ? "Yes"

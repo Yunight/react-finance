@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { format } from "date-fns";
 import {
   LineChart,
@@ -8,32 +8,63 @@ import {
   Tooltip,
   Line,
 } from "recharts";
+
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { min, max } from "d3-array";
 import { Separator } from "@/components/ui/separator";
+import { useEffect, useMemo } from "react";
+import { getSma } from "@/api/polygonApi";
+import { getSmaFailure, getSmaStart, getSmaSuccess } from "@/redux/tickerSlice";
+import { dateConvert } from "@/lib/utils";
 
 function TickerStockChart() {
   const values = useAppSelector((state) => state.ticker.sma?.results.values);
   const isLoading = useAppSelector((state) => state.ticker.loading);
+  const dispatch = useAppDispatch();
+
   const selectedTickerData = useAppSelector(
     (state) => state.ticker.selectedTicker
+  );
+
+  useEffect(() => {
+    if (selectedTickerData) {
+      const intervalId = setInterval(() => {
+        dispatch(getSmaStart());
+        getSma(selectedTickerData.ticker)
+          .then((data) =>
+            dispatch(
+              getSmaSuccess({ results: { values: data.results.values } })
+            )
+          )
+          .catch((error) => dispatch(getSmaFailure(error.message)));
+      }, 30 * 60 * 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [dispatch, selectedTickerData]);
+
+  const minValue = useMemo(() => min(values ?? [], (d) => d.value), [values]);
+  const maxValue = useMemo(() => max(values ?? [], (d) => d.value), [values]);
+
+  const startValue = Math.floor(minValue ?? 0);
+  const endValue = Math.ceil(maxValue ?? 0);
+
+  const ticks = useMemo(
+    () =>
+      Array.from(
+        { length: endValue - startValue + 1 },
+        (_, i) => startValue + i
+      ),
+    [startValue, endValue]
+  );
+
+  const sortedData = useMemo(
+    () => [...(values ?? [])].sort((a, b) => a.timestamp - b.timestamp),
+    [values]
   );
 
   if (isLoading || !selectedTickerData || !values) {
     return null;
   }
-
-  const minValue = min(values, (d) => d.value);
-  const maxValue = max(values, (d) => d.value);
-
-  const startValue = Math.floor(minValue ?? 0);
-  const endValue = Math.ceil(maxValue ?? 0);
-
-  const ticks = Array.from(
-    { length: endValue - startValue + 1 },
-    (_, i) => startValue + i
-  );
-
   return (
     <Card className="w-full mb-4 animate-out duration-1000">
       <CardHeader>
@@ -41,13 +72,11 @@ function TickerStockChart() {
         <Separator />
       </CardHeader>
       <CardContent>
-        <LineChart width={500} height={300} data={values}>
+        <LineChart width={500} height={300} data={sortedData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="timestamp"
-            tickFormatter={(timestamp) =>
-              format(new Date(timestamp), "dd-MM-yy")
-            }
+            tickFormatter={(timestamp) => dateConvert(timestamp)}
           />
           <YAxis
             domain={[startValue, endValue]}
@@ -55,9 +84,7 @@ function TickerStockChart() {
             tickFormatter={(value) => `$${value}`}
           />
           <Tooltip
-            labelFormatter={(timestamp) =>
-              format(new Date(timestamp), "dd-MM-yyyy")
-            }
+            labelFormatter={(timestamp) => dateConvert(timestamp)}
             formatter={(value) => [`$${value}`, "Value"]}
           />
           <Line type="monotone" dataKey="value" stroke="#82ca9d" />

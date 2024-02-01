@@ -133,3 +133,40 @@ export interface GroupedDailyResponse {
   status: string;
   results: ResultItem[];
 }
+
+// News
+
+export interface TickerNewsParams {
+  ticker?: string;
+  "ticker.gt"?: string;
+  "ticker.gte"?: string;
+  "ticker.lt"?: string;
+  "ticker.lte"?: string;
+  published_utc?: string;
+  "published_utc.gt"?: string;
+  "published_utc.gte"?: string;
+  "published_utc.lt"?: string;
+  "published_utc.lte"?: string;
+  order?: string;
+  limit?: number;
+  sort?: string;
+}
+
+export interface TickerNewsResult {
+  amp_url: string;
+  article_url: string;
+  author: string;
+  description: string;
+  id: string;
+  image_url: string;
+  keywords: string[];
+  published_utc: string;
+  publisher: {
+    favicon_url: string;
+    homepage_url: string;
+    logo_url: string;
+    name: string;
+  };
+  tickers: string[];
+  title: string;
+}

@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AllTickerDetails, SmaResponse } from "../types/types";
+import {
+  AllTickerDetails,
+  SmaResponse,
+  TickerNewsResponse,
+} from "../types/types";
 import { ResultItem } from "../types/types";
 
 interface TickerState {
@@ -9,6 +13,8 @@ interface TickerState {
   selectedTicker: AllTickerDetails | null;
   sma: SmaResponse | null;
   kpiData: ResultItem[];
+  newsData: TickerNewsResponse[];
+  searchInput: string;
 }
 
 const initialState: TickerState = {
@@ -18,6 +24,8 @@ const initialState: TickerState = {
   selectedTicker: null,
   sma: null,
   kpiData: [],
+  newsData: [],
+  searchInput: "",
 };
 
 const tickerSlice = createSlice({
@@ -36,7 +44,10 @@ const tickerSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    selectTicker: (state, action: PayloadAction<AllTickerDetails>) => {
+    setSearchInput: (state, action: PayloadAction<string>) => {
+      state.searchInput = action.payload;
+    },
+    selectedTicker: (state, action: PayloadAction<AllTickerDetails>) => {
       state.selectedTicker = action.payload;
     },
     resetSelectedTicker: (state) => {
@@ -77,6 +88,24 @@ const tickerSlice = createSlice({
       state.sma = initialState.sma;
       state.kpiData = initialState.kpiData;
     },
+    getNewsDataStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    getNewsDataSuccess: (
+      state,
+      action: PayloadAction<TickerNewsResponse[]>
+    ) => {
+      state.newsData = action.payload;
+      state.loading = false;
+    },
+    getNewsDataFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    resetError: (state) => {
+      state.error = null;
+    },
   },
 });
 
@@ -84,7 +113,8 @@ export const {
   fetchDataStart,
   fetchDataSuccess,
   fetchDataFailure,
-  selectTicker,
+  setSearchInput,
+  selectedTicker,
   resetSelectedTicker,
   getSmaStart,
   getSmaSuccess,
@@ -94,6 +124,10 @@ export const {
   getKpiDataSuccess,
   getKpiDataFailure,
   resetData,
+  getNewsDataStart,
+  getNewsDataSuccess,
+  getNewsDataFailure,
+  resetError,
 } = tickerSlice.actions;
 
 export default tickerSlice.reducer;

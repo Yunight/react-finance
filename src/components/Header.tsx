@@ -1,7 +1,11 @@
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/bourse.png";
-
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useEffect } from "react";
+import { resetError } from "@/redux/tickerSlice";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -9,14 +13,25 @@ function classNames(...classes: string[]) {
 const navigation = [
   { name: "Dashboard", path: "/dashboard", current: false, title: "Dashboard" },
   { name: "Search", path: "/", current: true, title: "Search" },
-  { name: "Calendar", path: "/calendar", current: false, title: "Calendar" },
+  { name: "News", path: "/news", current: false, title: "News" },
   { name: "Reports", path: "/reports", current: false, title: "Reports" },
 ];
 
 function Header() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const currentTitle =
     navigation.find((item) => item.path === location.pathname)?.title || "Home";
+  const errorMessage = useAppSelector((state) => state.ticker.error);
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        dispatch(resetError());
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [dispatch, errorMessage]);
 
   return (
     <div className="min-h-full">
@@ -57,6 +72,25 @@ function Header() {
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             {currentTitle}
+            <div className="pt-4">
+              <Transition
+                show={!!errorMessage}
+                enter="transition-opacity duration-500"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-500"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Alert variant="destructive">
+                  <ExclamationTriangleIcon className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>
+                    {errorMessage} : 5 calls per min wait a minute
+                  </AlertDescription>
+                </Alert>
+              </Transition>
+            </div>
           </h1>
         </div>
       </header>
