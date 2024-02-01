@@ -94,7 +94,7 @@ const AutoCompleteSearch = () => {
             <li
               key={index}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="cursor-pointer hover:bg-gray-400 px-4 py-2 hover:rounded-3xl"
+              className="cursor-pointer hover:bg-white px-4 py-2 hover:rounded-3xl"
             >
               {suggestion.name} ({suggestion.ticker})
             </li>

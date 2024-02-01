@@ -1,5 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { NavLink, useLocation } from "react-router-dom";
+import logo from "../assets/bourse.png";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -24,11 +25,7 @@ function Header() {
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <img
-                  className="h-8 w-8"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                />
+                <img className="h-8 w-8" src={logo} alt="Your Company" />
               </div>
               <div className=" md:block">
                 <div className="ml-10 flex items-baseline space-x-4 ">
