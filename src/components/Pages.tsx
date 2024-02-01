@@ -1,5 +1,5 @@
 import AutoCompleteSearch from "./AutoCompleteSearch";
-import DashboardKpiExamples from "./DashboardKpiExamples";
+import KpiDisplay from "./KpiDisplay";
 import NewsCard from "./NewsCard";
 import TickerDetails from "./TickerDetails";
 import TickerStockChart from "./TickerStockChart";
@@ -7,7 +7,7 @@ import TickerStockValue from "./TickerStockValue";
 
 const Home = () => (
   <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
-    <DashboardKpiExamples />
+    <KpiDisplay />
   </main>
 );
 

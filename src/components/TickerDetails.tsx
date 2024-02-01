@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 
 import { dateConvert } from "@/lib/utils";
+
 const TickerDetails = () => {
   const selectedTickerData = useAppSelector(
     (state) => state.ticker.selectedTicker

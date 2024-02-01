@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { format } from "date-fns";
 import {
   LineChart,
   CartesianGrid,
@@ -17,7 +16,7 @@ import { getSma } from "@/api/polygonApi";
 import { getSmaFailure, getSmaStart, getSmaSuccess } from "@/redux/tickerSlice";
 import { dateConvert } from "@/lib/utils";
 
-function TickerStockChart() {
+const TickerStockChart = () => {
   const values = useAppSelector((state) => state.ticker.sma?.results.values);
   const isLoading = useAppSelector((state) => state.ticker.loading);
   const dispatch = useAppDispatch();
@@ -92,6 +91,6 @@ function TickerStockChart() {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default TickerStockChart;

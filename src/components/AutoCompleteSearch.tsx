@@ -17,7 +17,6 @@ import { useRef, useState, useMemo, useCallback } from "react";
 import axios, { CancelTokenSource } from "axios";
 import { Input } from "@/components/ui/input";
 import { Transition } from "@headlessui/react";
-import { Label } from "./ui/label";
 
 const AutoCompleteSearch = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -109,9 +108,7 @@ const AutoCompleteSearch = () => {
       leaveTo="opacity-0"
     >
       <div className="flex items-center space-x-2 mb-8 ">
-        <Label htmlFor="tickers" className="text-2xl">
-          Search and Display Ticker's Informations
-        </Label>
+        <div className="text-2xl">Search and Display Ticker's Informations</div>
       </div>
       <div className="relative  w-1/3 mb-8">
         <Input

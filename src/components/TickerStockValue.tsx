@@ -9,7 +9,7 @@ import {
 import { format } from "date-fns";
 import { Separator } from "@/components/ui/separator";
 
-function TickerStockValue() {
+const TickerStockValue = () => {
   const values = useAppSelector((state) => state.ticker.sma?.results.values);
   const mostRecentStockValue = values?.[0].value ?? 0;
   const lasTimeUpdate = values?.[0].timestamp ?? 0;
@@ -41,6 +41,6 @@ function TickerStockValue() {
       </CardFooter>
     </Card>
   );
-}
+};
 
 export default TickerStockValue;

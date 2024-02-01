@@ -1,16 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { News, Home, Reports, Search } from "./components/Pages";
+import { News, Home, Search } from "./components/Pages";
 import Header from "./components/Header";
 
 const App = () => (
   <Router>
     <Header />
     <Routes>
-      <Route path="/dashboard" element={<Home />} />
-      <Route path="/" element={<Search />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/search" element={<Search />} />
       <Route path="/news" element={<News />} />
-      <Route path="/reports" element={<Reports />} />
     </Routes>
   </Router>
 );

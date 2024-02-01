@@ -1,7 +1,6 @@
-import { getGroupedDaily } from "@/api/polygonApi";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getKpiDataFailure, getKpiDataSuccess } from "@/redux/tickerSlice";
-import { Label } from "@/components/ui/label";
+import { getKpiDataSuccess } from "@/redux/tickerSlice";
+
 import {
   SetStateAction,
   useCallback,
@@ -18,39 +17,21 @@ import {
   CardDescription,
   CardContent,
 } from "./ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+
 import { Input } from "@/components/ui/input";
 import { Separator } from "./ui/separator";
-import { dateConvert } from "@/lib/utils";
 
-function DashboardKpiExamples() {
+import { useKpiData } from "@/hooks/useKpiData";
+import KpiTable from "./KpiTable";
+
+const DashboardKpiExamples = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 18;
   const kpiData = useAppSelector((state) => state.ticker.kpiData);
   const [filter, setFilter] = useState("");
 
-  const fetchAndStoreData = useCallback(
-    (date: string) => {
-      getGroupedDaily({ date })
-        .then((res) => {
-          localStorage.setItem(
-            "kpiData",
-            JSON.stringify({ date, results: res.results })
-          );
-          dispatch(getKpiDataSuccess(res.results));
-        })
-        .catch((error) => dispatch(getKpiDataFailure(error.message)));
-    },
-    [dispatch]
-  );
+  const { fetchAndStoreData } = useKpiData();
 
   const filteredItems = useMemo(() => {
     return kpiData.filter((item) =>
@@ -109,9 +90,9 @@ function DashboardKpiExamples() {
   return (
     <>
       <div className="flex items-center space-x-2 mb-8 ">
-        <Label htmlFor="tickers" className="text-2xl">
+        <div className="text-2xl">
           Display and Filter - Grouped Daily Tickers
-        </Label>
+        </div>
       </div>
 
       <div className="flex justify-between items-center mb-8">
@@ -155,63 +136,13 @@ function DashboardKpiExamples() {
               <Separator />
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[200px]">Data</TableHead>
-                    <TableHead>Value</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>Close Price</TableCell>
-                    <TableCell>{item.c}</TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell>Highest Price</TableCell>
-                    <TableCell>{item.h}</TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell>Lowest Price</TableCell>
-                    <TableCell>{item.l}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Number of Transactions</TableCell>
-                    <TableCell>{item.n}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Open Price</TableCell>
-                    <TableCell>{item.o}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>OTC Ticker</TableCell>
-                    <TableCell>{item.otc ? "Yes" : "No"}</TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell>End of Aggregate Window</TableCell>
-                    <TableCell>{dateConvert(item.t)}</TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell>Trading Volume</TableCell>
-                    <TableCell>{item.v}</TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell>Volume Weighted Average Price</TableCell>
-                    <TableCell>{item.vw}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <KpiTable item={item} />
             </CardContent>
           </Card>
         ))}
       </div>
     </>
   );
-}
+};
 
 export default DashboardKpiExamples;

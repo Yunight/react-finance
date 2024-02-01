@@ -4,25 +4,30 @@ import logo from "../assets/bourse.png";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { resetError } from "@/redux/tickerSlice";
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { JSX } from "react/jsx-runtime";
 
 const navigation = [
-  { name: "Dashboard", path: "/dashboard", current: false, title: "Dashboard" },
-  { name: "Search", path: "/", current: true, title: "Search" },
+  { name: "Dashboard", path: "/", current: false, title: "Dashboard" },
+  { name: "Search", path: "/search", current: true, title: "Search" },
   { name: "News", path: "/news", current: false, title: "News" },
-  { name: "Reports", path: "/reports", current: false, title: "Reports" },
 ];
 
-function Header() {
+const Header = (): JSX.Element => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const currentTitle =
-    navigation.find((item) => item.path === location.pathname)?.title || "Home";
   const errorMessage = useAppSelector((state) => state.ticker.error);
+
+  const currentTitle = useMemo(
+    () =>
+      navigation.find((item) => item.path === location.pathname)?.title ||
+      "Home",
+    [location.pathname]
+  );
+  const classNames = useCallback((...classes: string[]) => {
+    return classes.filter(Boolean).join(" ");
+  }, []);
 
   useEffect(() => {
     if (errorMessage) {
@@ -96,6 +101,6 @@ function Header() {
       </header>
     </div>
   );
-}
+};
 
 export default Header;
