@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useCallback, useEffect, useMemo } from "react";
 import { resetError } from "@/redux/tickerSlice";
 import { JSX } from "react/jsx-runtime";
+import ThemeSelector from "./ThemeSelector";
 
 const navigation = [
   { name: "Daily", path: "/", current: false, title: "Daily" },
@@ -47,8 +48,8 @@ const Header = (): JSX.Element => {
               <div className="flex-shrink-0">
                 <img className="h-8 w-8" src={logo} alt="Your Company" />
               </div>
-              <div className=" md:block">
-                <div className="ml-10 flex items-baseline space-x-4 ">
+              <div className="md:block">
+                <div className="ml-10 flex items-baseline space-x-4">
                   {navigation.map((item) => (
                     <NavLink
                       key={item.name}
@@ -58,7 +59,7 @@ const Header = (): JSX.Element => {
                           isActive
                             ? "border border-blue-950 text-blue-950 transition-all duration-500 ease-in-out scale-125"
                             : "text-gray-600 hover:bg-gray-100 hover:text-black",
-                          "rounded-lg px-3 py-2 text-sm font-medium "
+                          "rounded-lg px-3 py-2 text-sm font-medium"
                         )
                       }
                       aria-current={item.current ? "page" : undefined}
@@ -69,6 +70,7 @@ const Header = (): JSX.Element => {
                 </div>
               </div>
             </div>
+            <ThemeSelector />
           </div>
         </div>
       </Disclosure>

@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 
-import { Button } from "./ui/button";
 import {
   Card,
   CardHeader,
@@ -104,25 +103,55 @@ const DashboardKpiExamples = () => {
             className="border-2 border-gray-300 rounded-md p-2 min-w-1/3"
           />
         </div>
-        <div className="">{filteredItems.length} results</div>
-        <div className="flex gap-8">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          <div className="flex items-center justify-center text-sm text-muted-foreground">
-            Page {currentPage} of {totalPages}
+        <div className="stats shadow bg-primary-content">
+          <div className="stat">
+            <div className="stat-figure ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-8 h-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+
+            <div className="stat-title">Total Results</div>
+            <div className="stat-value">{filteredItems.length}</div>
+            <div className="stat-desc">
+              {filteredItems.length > 9000 ? "It's over 9000 !" : null}
+            </div>
           </div>
-          <Button
-            variant="outline"
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </Button>
+        </div>
+        <div className="flex gap-8">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={handlePrevious}
+              disabled={currentPage === 1 || filteredItems.length === 0}
+            >
+              «
+            </button>
+            <button className="join-item btn">
+              {currentPage === 1 && filteredItems.length === 0
+                ? ` No result`
+                : `Page ${currentPage} of ${totalPages}`}
+            </button>
+            <button
+              className="join-item btn "
+              onClick={handleNext}
+              disabled={
+                currentPage === totalPages || filteredItems.length === 0
+              }
+            >
+              »
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex justify-stretch w-screen flex-wrap max-w-7xl mx-auto gap-20">

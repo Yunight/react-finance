@@ -1,12 +1,5 @@
 import { ResultItem } from "@/types/types";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+
 import { dateConvert } from "@/lib/utils";
 
 interface KpiTableProps {
@@ -15,57 +8,64 @@ interface KpiTableProps {
 
 const KpiTable = ({ item }: KpiTableProps) => {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[200px]">Data</TableHead>
-          <TableHead>Value</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>Close Price</TableCell>
-          <TableCell>{item.c}</TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell>Highest Price</TableCell>
-          <TableCell>{item.h}</TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell>Lowest Price</TableCell>
-          <TableCell>{item.l}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Number of Transactions</TableCell>
-          <TableCell>{item.n}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>Open Price</TableCell>
-          <TableCell>{item.o}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>OTC Ticker</TableCell>
-          <TableCell>{item.otc ? "Yes" : "No"}</TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell>End of Aggregate Window</TableCell>
-          <TableCell>{dateConvert(item.t)}</TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell>Trading Volume</TableCell>
-          <TableCell>{item.v}</TableCell>
-        </TableRow>
-
-        <TableRow>
-          <TableCell>Volume Weighted Average Price</TableCell>
-          <TableCell>{item.vw}</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+    <div className="overflow-x-auto">
+      <table className="table table-zebra">
+        {/* head */}
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* row 1 */}
+          <tr>
+            <th>Close Price</th>
+            <td>{item.c}</td>
+          </tr>
+          {/* row 2 */}
+          <tr>
+            <th>Highest Price</th>
+            <td>{item.h}</td>
+          </tr>
+          {/* row 3 */}
+          <tr>
+            <th>Lowest Price</th>
+            <td>{item.l}</td>
+          </tr>
+          {/* row 4 */}
+          <tr>
+            <th>Number of Transactions</th>
+            <td>{item.n}</td>
+          </tr>
+          {/* row 5 */}
+          <tr>
+            <th>Open Price</th>
+            <td>{item.o}</td>
+          </tr>
+          {/* row 6 */}
+          <tr>
+            <th>OTC Ticker</th>
+            <td>{item.otc ? "Yes" : "No"}</td>
+          </tr>
+          {/* row 7 */}
+          <tr>
+            <th>End of Aggregate Window</th>
+            <td>{dateConvert(item.t)}</td>
+          </tr>
+          {/* row 8 */}
+          <tr>
+            <th>Trading Volume</th>
+            <td>{item.v}</td>
+          </tr>
+          {/* row 9 */}
+          <tr>
+            <th>Volume Weighted Average Price</th>
+            <td>{item.vw}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 };
 
