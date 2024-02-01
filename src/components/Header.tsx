@@ -9,7 +9,7 @@ import { resetError } from "@/redux/tickerSlice";
 import { JSX } from "react/jsx-runtime";
 
 const navigation = [
-  { name: "Dashboard", path: "/", current: false, title: "Dashboard" },
+  { name: "Daily", path: "/", current: false, title: "Daily" },
   { name: "Search", path: "/search", current: true, title: "Search" },
   { name: "News", path: "/news", current: false, title: "News" },
 ];
