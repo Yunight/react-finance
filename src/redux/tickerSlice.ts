@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   AllTickerDetails,
   SmaResponse,
-  TickerNewsResponse,
+  TickerNewsResult,
 } from "../types/types";
 import { ResultItem } from "../types/types";
 
@@ -13,7 +13,7 @@ interface TickerState {
   selectedTicker: AllTickerDetails | null;
   sma: SmaResponse | null;
   kpiData: ResultItem[];
-  newsData: TickerNewsResponse[];
+  newsData: TickerNewsResult[];
   searchInput: string;
 }
 
@@ -92,10 +92,7 @@ const tickerSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getNewsDataSuccess: (
-      state,
-      action: PayloadAction<TickerNewsResponse[]>
-    ) => {
+    getNewsDataSuccess: (state, action: PayloadAction<TickerNewsResult[]>) => {
       state.newsData = action.payload;
       state.loading = false;
     },
