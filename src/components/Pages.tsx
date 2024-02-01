@@ -5,7 +5,7 @@ import TickerDetails from "./TickerDetails";
 import TickerStockChart from "./TickerStockChart";
 import TickerStockValue from "./TickerStockValue";
 
-const Home = () => (
+const Daily = () => (
   <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
     <KpiDisplay />
   </main>
@@ -38,4 +38,4 @@ const Reports = () => (
   </main>
 );
 
-export { Home, Search, News, Reports };
+export { Daily, Search, News, Reports };
