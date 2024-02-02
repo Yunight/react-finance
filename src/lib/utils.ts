@@ -1,3 +1,4 @@
+import { BASE_TIMER } from "@/consts/consts";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -14,9 +15,9 @@ export const dateConvert = (dataDate: string | number | Date) => {
   return `${day}-${month}-${year}`;
 };
 
-export const getCurrentTimePlus30Mins = (): string => {
+export const getCurrentTimePlusXMins = (): string => {
   const date = new Date();
-  date.setMinutes(date.getMinutes() + 30);
+  date.setMinutes(date.getMinutes() + BASE_TIMER);
 
   const hours = ("0" + date.getHours()).slice(-2);
   const minutes = ("0" + date.getMinutes()).slice(-2);

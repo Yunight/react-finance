@@ -15,6 +15,7 @@ import { useEffect, useMemo } from "react";
 import { getSma } from "@/api/polygonApi";
 import { getSmaFailure, getSmaStart, getSmaSuccess } from "@/redux/tickerSlice";
 import { dateConvert } from "@/lib/utils";
+import { BASE_TIMER } from "@/consts/consts";
 
 const TickerStockChart = () => {
   const values = useAppSelector((state) => state.ticker.sma?.results.values);
@@ -37,7 +38,7 @@ const TickerStockChart = () => {
             );
           })
           .catch((error) => dispatch(getSmaFailure(error.message)));
-      }, 30 * 60 * 1000);
+      }, BASE_TIMER * 60 * 1000);
       return () => clearInterval(intervalId);
     }
   }, [dispatch, selectedTickerData]);

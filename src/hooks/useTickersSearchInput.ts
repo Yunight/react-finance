@@ -16,7 +16,7 @@ import {
 } from "@/redux/tickerSlice";
 import { getTickers, getSma } from "@/api/polygonApi";
 import { AllTickerDetails } from "@/types/types";
-import { getCurrentTimePlus30Mins } from "@/lib/utils";
+import { getCurrentTimePlusXMins } from "@/lib/utils";
 
 export const useAutoCompleteSearch = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -37,7 +37,7 @@ export const useAutoCompleteSearch = () => {
         getTickers(value, cancelToken.current.token)
           .then((data) => {
             dispatch(fetchDataSuccess(data.results));
-            dispatch(setNextStockValueUpdate(getCurrentTimePlus30Mins()));
+            dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
           })
           .catch((error) => {
             if (axios.isCancel(error)) {
