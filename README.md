@@ -5,7 +5,7 @@
 - npm install
 - npm run dev
 
-create .env file and create and variable VITE_APP_SECRET = SECRET_TOKEN
+create .env.local file and create and variable VITE_APP_SECRET = SECRET_TOKEN
 
 get your SECRET_TOKEN from [https://api.polygon.io/](https://polygon.io/)
 
