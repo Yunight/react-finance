@@ -39,7 +39,9 @@ const Header = (): JSX.Element => {
       >
         <div className="flex items-center">
           <div className="flex ">
-            <img className="h-8 w-8" src={logo} alt="Your Company" />
+            <div className="">
+              <img className="h-8 w-8 " src={logo} alt="React Finance" />
+            </div>
             <div className="ml-10 flex items-baseline space-x-4">
               {navigation.map((item) => (
                 <NavLink
