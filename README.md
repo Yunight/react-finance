@@ -31,7 +31,7 @@ The application consists of three main pages and one feature:
 
 - Retrieves all ticker data from the previous day, as the current day's data is unavailable with the free plan.
 - Allows filtering and navigation.
-- Data are stored in both local storage and Redux to minimize redundant API calls and kept after refreshing the page, as the data remains unchanged until the next day.
+- Datas are stored in both local storage and Redux to minimize redundant API calls and kept after refreshing the page, as the data remains unchanged until the next day.
 
 ### Search
 
@@ -45,8 +45,8 @@ The application consists of three main pages and one feature:
 ### News
 
 - Fetches all news related to tickers from the API.
-- Ensures data are the latest every time the page is accessed.
-- Stores data in the Redux store.
+- Done everytime we open the page to ensures that the datas are the newest.
+- Stores datas in the Redux store.
 
 ### Theme Manager
 
