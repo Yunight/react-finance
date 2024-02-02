@@ -13,7 +13,7 @@ import {
 import axios, { CancelToken } from "axios";
 
 const BASE_URL = "https://api.polygon.io/";
-const apiKey = "WV4Eua2SmUqufXFHNaP6FpA7NiFpD2JQ";
+const apiKey = import.meta.env.VITE_APP_SECRET;
 
 // export async function getTickerDetails(
 //   params: SingleTickerDetailsParams
