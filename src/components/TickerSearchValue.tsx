@@ -72,11 +72,10 @@ const TickerStockValue = () => {
       <Card className="w-1/2 mb-4">
         <CardHeader>
           <CardTitle>Next Update at :</CardTitle>
-          <Separator />
         </CardHeader>
         <CardContent>
           <div className="stat">
-            <div className="stat-value">{nextUpdateTime}</div>
+            <div className="stat-value text-info">{nextUpdateTime}</div>
           </div>
 
           <div className="text-xl font-bold"></div>
