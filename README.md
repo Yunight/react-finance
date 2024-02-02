@@ -1,7 +1,7 @@
 
 # Technical Challenge: React Finance Dashboard
 
-This project is built using React, Vite, TypeScript, Redux and DaisyUI. 
+This project is built using React, Vite, TypeScript, Redux, Recharts & DaisyUI. 
 
 ## Getting Started
 
