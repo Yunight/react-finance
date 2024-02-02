@@ -16,7 +16,7 @@ const NewsCardDisplay = () => {
     currentPage,
     totalPages,
     isPending,
-  } = usePagination(1, ARTICLES_PER_PAGE, results || []);
+  } = usePagination(ARTICLES_PER_PAGE, results || []);
 
   return (
     <>
