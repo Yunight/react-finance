@@ -30,7 +30,7 @@ The application consists of three main pages and one feature:
 
 - Retrieves all ticker data from the previous day, as the current day's data is unavailable with the free plan.
 - Allows filtering and navigation.
-- Data are stored in both local storage and Redux to minimize redundant API calls, as the data remains unchanged until the next day.
+- Data are stored in both local storage and Redux to minimize redundant API calls and kept after refreshing the page, as the data remains unchanged until the next day.
 
 ### Search
 
@@ -39,6 +39,7 @@ The application consists of three main pages and one feature:
 - A new API call is made if the input changes after 500ms to avoid many calls at each input change, with the results stored in Redux.
 - Upon selection, the application makes another API call to fetch the Simple Moving Average (SMA) and displays the graph.
 - Displays the latest stock value and updates it at a user-configured interval.
+- You can change page and the value will be kept however since we clear the interval everytime to avoid any side effect in useEffect, next update timing is also updated to have the correct value
 
 ### News
 
@@ -49,7 +50,7 @@ The application consists of three main pages and one feature:
 ### Theme Manager
 
 - on the top right of the screen there are 2 lists, one is for switching to a light theme and the other dark, try to play with them !
-
+- one toggle switch is also here, must choose one of the light theme first "light","cupecake","bumblebee","emerald" or "corporate" by default the Dark Theme "Dark" will be the default Dark Theme, you can configure inside tailwind.config.js
 ## Configuration
 
 A constants file contains all the constant values for the application:
