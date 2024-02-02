@@ -1,7 +1,10 @@
 import { useCallback } from "react";
 import { getGroupedDaily } from "@/api/polygonApi";
 import { useAppDispatch } from "@/redux/store";
-import { getKpiDataFailure, getKpiDataSuccess } from "@/redux/tickerSlice";
+import {
+  getDailyNewsDataFailure,
+  getDailyNewsDataSuccess,
+} from "@/redux/tickerSlice";
 
 export function useDailyTickers() {
   const dispatch = useAppDispatch();
@@ -11,12 +14,12 @@ export function useDailyTickers() {
       getGroupedDaily({ date })
         .then((res) => {
           localStorage.setItem(
-            "kpiData",
+            "dailyNews",
             JSON.stringify({ date, results: res.results })
           );
-          dispatch(getKpiDataSuccess(res.results));
+          dispatch(getDailyNewsDataSuccess(res.results));
         })
-        .catch((error) => dispatch(getKpiDataFailure(error.message)));
+        .catch((error) => dispatch(getDailyNewsDataFailure(error.message)));
     },
     [dispatch]
   );

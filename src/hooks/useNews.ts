@@ -9,14 +9,14 @@ import { getTickerNews } from "@/api/polygonApi";
 
 export const useNews = () => {
   const dispatch = useAppDispatch();
-  const results = useAppSelector((state) => state.ticker.newsData[0]?.results);
+  const results = useAppSelector((state) => state.ticker.newsResponse?.results);
 
   useEffect(() => {
     dispatch(getNewsDataStart());
     getTickerNews()
       .then((news) => {
         localStorage.setItem("newsData", JSON.stringify(news));
-        dispatch(getNewsDataSuccess([news]));
+        dispatch(getNewsDataSuccess(news));
       })
       .catch((error) => dispatch(getNewsDataFailure(error.message)));
   }, [dispatch]);

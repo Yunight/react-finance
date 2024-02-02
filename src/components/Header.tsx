@@ -1,4 +1,4 @@
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/bourse.png";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -65,7 +65,7 @@ const Header = (): JSX.Element => {
           <ThemeSelector />
         </div>
       </Disclosure>
-      {/* <div className="pt-4">
+      <div className="pt-4">
         <Transition
           show={!!errorMessage}
           enter="transition-opacity duration-500"
@@ -75,15 +75,13 @@ const Header = (): JSX.Element => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Alert variant="destructive">
-            <ExclamationTriangleIcon className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>
-              {errorMessage} : 5 calls per min wait a minute
-            </AlertDescription>
-          </Alert>
+          <div className="toast toast-top toast-center">
+            <div className="alert alert-error">
+              <span>{errorMessage} </span>
+            </div>
+          </div>
         </Transition>
-      </div> */}
+      </div>
     </div>
   );
 };

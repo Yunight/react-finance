@@ -1,3 +1,4 @@
+import { NUMBER_OF_NEWS } from "@/consts/consts";
 import {
   AllTickerDetails,
   AllTickersResponse,
@@ -6,7 +7,7 @@ import {
   GroupedDailyResponse,
   SmaResponse,
   TickerNewsParams,
-  TickerNewsResult,
+  TickerNewsResponse,
 } from "@/types/types";
 
 import axios, { CancelToken } from "axios";
@@ -112,14 +113,14 @@ export async function getGroupedDaily(
 
 export async function getTickerNews(
   params?: TickerNewsParams
-): Promise<TickerNewsResult> {
+): Promise<TickerNewsResponse> {
   const url = `${BASE_URL}v2/reference/news`;
 
   try {
-    const response = await axios.get<TickerNewsResult>(url, {
+    const response = await axios.get<TickerNewsResponse>(url, {
       params: {
         order: "desc",
-        limit: 10,
+        limit: NUMBER_OF_NEWS,
         ...params,
         apiKey,
       },

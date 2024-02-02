@@ -1,17 +1,6 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "./ui/button";
 import { dateConvert } from "@/lib/utils";
 import { TickerNewsResult } from "@/types/types";
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-
 interface NewsCardItemProps {
   result: TickerNewsResult;
 }
@@ -26,37 +15,44 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
   }, [result.image_url]);
 
   return (
-    <Card className="w-[500px] ">
-      <CardHeader className="flex ">
-        <CardTitle>
+    <div className="card card-compact w-96 bg-base-100 shadow-xl">
+      <figure>
+        {isLoading ? (
+          <div className="flex flex-col gap-4 w-full">
+            <div className="skeleton w-full h-48"></div>
+          </div>
+        ) : (
+          <img
+            src={result.image_url}
+            alt={result.title}
+            className="w-full h-48 "
+          />
+        )}
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">
           {result.title && result.title.length > 50
             ? `${result.title.substring(0, 50)}...`
             : result.title}
-        </CardTitle>
-        <CardDescription className="">
+        </h2>
+        <p>
           By {result.author}
-          <i className="block">
+          <i className="block pb-5">
             Published at {dateConvert(result.published_utc)}
           </i>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="min-h-24">
-        {isLoading ? (
-          <Skeleton className="w-full h-48 rounded-sm" />
-        ) : (
-          <img src={result.image_url} className="w-full h-48 object-cover" />
-        )}
-        <p className="py-4">
           {result.description && result.description.length > 100
             ? `${result.description.substring(0, 100)}...`
             : result.description}
         </p>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button onClick={() => window.open(result.article_url, "_blank")}>
-          Read more
-        </Button>
-      </CardFooter>
+        <div className="card-actions justify-end">
+          <button
+            className="btn btn-info text-base-100"
+            onClick={() => window.open(result.article_url, "_blank")}
+          >
+            Read more
+          </button>
+        </div>
+      </div>
       <div className="flex flex-wrap space-x-4 text-xs text-muted-foreground p-4">
         {result.tickers.map((ticker, index) => (
           <div className="p-1" key={index}>
@@ -64,7 +60,7 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
           </div>
         ))}
       </div>
-    </Card>
+    </div>
   );
 };
 

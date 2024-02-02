@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   AllTickerDetails,
   SmaResponse,
-  TickerNewsResult,
+  TickerNewsResponse,
 } from "../types/types";
 import { ResultItem } from "../types/types";
 
@@ -12,8 +12,8 @@ interface TickerState {
   error: string | null;
   selectedTicker: AllTickerDetails | null;
   sma: SmaResponse | null;
-  kpiData: ResultItem[];
-  newsData: TickerNewsResult[];
+  dailyNews: ResultItem[];
+  newsResponse: TickerNewsResponse | null;
   searchInput: string;
   nextStockValueUpdate: string;
 }
@@ -24,8 +24,8 @@ const initialState: TickerState = {
   error: null,
   selectedTicker: null,
   sma: null,
-  kpiData: [],
-  newsData: [],
+  dailyNews: [],
+  newsResponse: null,
   searchInput: "",
   nextStockValueUpdate: "",
 };
@@ -70,15 +70,15 @@ const tickerSlice = createSlice({
     resetSma: (state) => {
       state.sma = null;
     },
-    getKpiDataStart: (state) => {
+    getDailyNewsDataStart: (state) => {
       state.loading = true;
       state.error = null;
     },
-    getKpiDataSuccess: (state, action: PayloadAction<ResultItem[]>) => {
-      state.kpiData = action.payload;
+    getDailyNewsDataSuccess: (state, action: PayloadAction<ResultItem[]>) => {
+      state.dailyNews = action.payload;
       state.loading = false;
     },
-    getKpiDataFailure: (state, action: PayloadAction<string>) => {
+    getDailyNewsDataFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -88,14 +88,14 @@ const tickerSlice = createSlice({
       state.error = initialState.error;
       state.selectedTicker = initialState.selectedTicker;
       state.sma = initialState.sma;
-      state.kpiData = initialState.kpiData;
+      state.dailyNews = initialState.dailyNews;
     },
     getNewsDataStart: (state) => {
       state.loading = true;
       state.error = null;
     },
-    getNewsDataSuccess: (state, action: PayloadAction<TickerNewsResult[]>) => {
-      state.newsData = action.payload;
+    getNewsDataSuccess: (state, action: PayloadAction<TickerNewsResponse>) => {
+      state.newsResponse = action.payload;
       state.loading = false;
     },
     getNewsDataFailure: (state, action: PayloadAction<string>) => {
@@ -125,9 +125,9 @@ export const {
   getSmaSuccess,
   getSmaFailure,
   resetSma,
-  getKpiDataStart,
-  getKpiDataSuccess,
-  getKpiDataFailure,
+  getDailyNewsDataStart,
+  getDailyNewsDataSuccess,
+  getDailyNewsDataFailure,
   resetData,
   getNewsDataStart,
   getNewsDataSuccess,

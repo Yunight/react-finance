@@ -152,6 +152,21 @@ export interface TickerNewsParams {
   sort?: string;
 }
 
+export interface TickerNewsResponse {
+  count: number;
+  next_url: string;
+  request_id: string;
+  results: TickerNewsResult[];
+  status: string;
+}
+
+export interface Publisher {
+  favicon_url: string;
+  homepage_url: string;
+  logo_url: string;
+  name: string;
+}
+
 export interface TickerNewsResult {
   amp_url: string;
   article_url: string;
@@ -161,12 +176,7 @@ export interface TickerNewsResult {
   image_url: string;
   keywords: string[];
   published_utc: string;
-  publisher: {
-    favicon_url: string;
-    homepage_url: string;
-    logo_url: string;
-    name: string;
-  };
+  publisher: Publisher;
   tickers: string[];
   title: string;
 }

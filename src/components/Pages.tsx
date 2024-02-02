@@ -1,6 +1,6 @@
 import AutoCompleteSearch from "./TickerSearchInput";
 import TickerSearchInput from "./DailyTickersDisplay";
-import NewsCard from "./NewsCard";
+import NewsCard from "./NewsCardDisplay";
 import TickerDetails from "./TickerSearchDetails";
 import TickerStockChart from "./TickerSearchChart";
 import TickerStockValue from "./TickerSearchValue";

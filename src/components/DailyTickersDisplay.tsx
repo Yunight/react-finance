@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getKpiDataSuccess } from "@/redux/tickerSlice";
+import { getDailyNewsDataSuccess } from "@/redux/tickerSlice";
 
 import {
   SetStateAction,
@@ -21,39 +21,42 @@ import { Separator } from "./ui/separator";
 import { useDailyTickers } from "@/hooks/useDailyTickers";
 import DailyTickersTable from "./DailyTickersTable";
 import ContentTitleDisplay from "./ContentTitleDisplay";
+import { usePagination } from "@/hooks/usePagination";
+import { NUMBER_OF_DAILY_PER_PAGE } from "@/consts/consts";
+import Pagination from "./Pagination";
 
 const DailyTickersDisplay = () => {
   const dispatch = useAppDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 18;
-  const kpiData = useAppSelector((state) => state.ticker.kpiData);
+  const itemsPerPage = NUMBER_OF_DAILY_PER_PAGE;
+  const dailyNews = useAppSelector((state) => state.ticker.dailyNews);
   const [filter, setFilter] = useState("");
 
   const { fetchAndStoreData } = useDailyTickers();
 
   const filteredItems = useMemo(() => {
-    return kpiData.filter((item) =>
+    return dailyNews.filter((item) =>
       item.T.toLowerCase().includes(filter.toLowerCase())
     );
-  }, [kpiData, filter]);
+  }, [dailyNews, filter]);
+
+  const { handleNext, handlePrevious, currentItems, currentPage, totalPages } =
+    usePagination(1, itemsPerPage, filteredItems);
 
   useEffect(() => {
     const currenTableCellate = new Date();
     const yesterday = new Date(currenTableCellate);
-    yesterday.setDate(yesterday.getDate() - 2);
+    yesterday.setDate(yesterday.getDate() - 1);
     const year = yesterday.getFullYear();
     const month = ("0" + (yesterday.getMonth() + 1)).slice(-2);
     const day = ("0" + yesterday.getDate()).slice(-2);
     const formattedDate = `${year}-${month}-${day}`;
 
-    const storedData = localStorage.getItem("kpiData");
-
-    setCurrentPage(1);
+    const storedData = localStorage.getItem("dailyNews");
 
     if (storedData) {
       const { date, results } = JSON.parse(storedData);
       if (date === formattedDate) {
-        dispatch(getKpiDataSuccess(results));
+        dispatch(getDailyNewsDataSuccess(results));
       } else {
         fetchAndStoreData(formattedDate);
       }
@@ -61,22 +64,6 @@ const DailyTickersDisplay = () => {
       fetchAndStoreData(formattedDate);
     }
   }, [dispatch, fetchAndStoreData, filter]);
-
-  const currentItems = useMemo(() => {
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    return filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-  }, [filteredItems, currentPage, itemsPerPage]);
-
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-
-  const handleNext = () => {
-    setCurrentPage(currentPage + 1);
-  };
-
-  const handlePrevious = () => {
-    setCurrentPage(currentPage - 1);
-  };
 
   const handleFilterChange = useCallback(
     (event: { target: { value: SetStateAction<string> } }) => {
@@ -122,31 +109,13 @@ const DailyTickersDisplay = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-8">
-          <div className="join">
-            <button
-              className="join-item btn"
-              onClick={handlePrevious}
-              disabled={currentPage === 1 || filteredItems.length === 0}
-            >
-              «
-            </button>
-            <button className="join-item btn">
-              {currentPage === 1 && filteredItems.length === 0
-                ? ` No result`
-                : `Page ${currentPage} of ${totalPages}`}
-            </button>
-            <button
-              className="join-item btn "
-              onClick={handleNext}
-              disabled={
-                currentPage === totalPages || filteredItems.length === 0
-              }
-            >
-              »
-            </button>
-          </div>
-        </div>
+        <Pagination
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          filteredItems={filteredItems}
+        />
       </div>
       <div className="flex justify-stretch w-screen flex-wrap max-w-7xl mx-auto gap-20">
         {currentItems.map((item, index) => (
