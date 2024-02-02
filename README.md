@@ -67,8 +67,44 @@ export const ARTICLES_PER_PAGE = 6;
 
 ## Project Structure
 
-- `components` folder contains all UI components.
-- `hooks` folder for custom React hooks.
-- `api` folder for API integration.
 
+- - `src`
+  - `api`
+    - `polygonApi.ts`
+  - `assets`
+    - `bourse.png`
+    - `react.svg`
+  - `components`
+    - `ui`
+      - `card.tsx`
+    - `separator.tsx`
+    - `ContentTitleDisplay.tsx`
+    - `DailyTickersDisplay.tsx`
+    - `DailyTickersTable.tsx`
+    - `Header.tsx`
+    - `NewsCardDisplay.tsx`
+    - `NewsCardItem.tsx`
+    - `Pages.tsx`
+    - `Pagination.tsx`
+    - `ThemeSelector.tsx`
+    - `TickerSearchChart.tsx`
+    - `TickerSearchDetails.tsx`
+    - `TickerSearchInput.tsx`
+    - `TickerSearchValue.tsx`
+  - `consts`
+    - `consts.ts`
+  - `data`
+  - `hooks`
+    - `useDailyTickers.ts`
+    - `useFetchDailyData.ts`
+    - `useNews.ts`
+    - `usePagination.ts`
+    - `useTickersSearchInput.ts`
+  - `lib`
+    - `utils.ts`
+  - `redux`
+    - `store.ts`
+    - `tickerSlice.ts`
+  - `types`
+    - `types.ts`
 ---
