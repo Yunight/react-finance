@@ -20,7 +20,8 @@ Create a `.env.local` file and add the following variable:
 VITE_APP_SECRET=SECRET_TOKEN
 ```
 
-Obtain your `SECRET_TOKEN` from Polygon.io API. 
+Obtain your `SECRET_TOKEN` from [Polygon.io](https://polygon.io/) API. 
+> Attention Polygon.io API. allows only 5 API calls per min for the free plan, once reached you'll have the error 429, juste wait a min and you'll be good to try again
 
 ## Features
 
