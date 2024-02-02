@@ -30,7 +30,7 @@ The application consists of three main pages and one feature:
 
 - Retrieves all ticker data from the previous day, as the current day's data is unavailable with the free plan.
 - Allows filtering and navigation.
-- Data are stored in both local storage and Redux to minimize redundant API calls, as the data remains unchanged until the next day.
+- Data are stored in both local storage and Redux to minimize redundant API calls and kept after refreshing the page, as the data remains unchanged until the next day.
 
 ### Search
 
