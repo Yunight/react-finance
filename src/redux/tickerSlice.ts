@@ -17,7 +17,6 @@ interface TickerState {
   newsResponse: TickerNewsResponse | null;
   searchInput: string;
   nextStockValueUpdate: string;
-  currentPage: number;
 }
 
 const initialState: TickerState = {
@@ -31,7 +30,6 @@ const initialState: TickerState = {
   newsResponse: null,
   searchInput: "",
   nextStockValueUpdate: "",
-  currentPage: 1,
 };
 
 const tickerSlice = createSlice({
@@ -118,9 +116,6 @@ const tickerSlice = createSlice({
     resetNextStockValueUpdate: (state) => {
       state.nextStockValueUpdate = initialState.nextStockValueUpdate;
     },
-    setCurrentPage: (state, action: PayloadAction<number>) => {
-      state.currentPage = action.payload;
-    },
   },
 });
 
@@ -146,7 +141,6 @@ export const {
   resetError,
   setNextStockValueUpdate,
   resetNextStockValueUpdate,
-  setCurrentPage,
 } = tickerSlice.actions;
 
 export default tickerSlice.reducer;

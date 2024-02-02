@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getDailyNewsDataFailure,
   getDailyNewsDataSuccess,
-  setCurrentPage,
   setDailyNewsFilter,
 } from "@/redux/tickerSlice";
 import { getGroupedDaily } from "@/api/polygonApi";
@@ -15,7 +14,6 @@ export function useDailyTickers() {
   const handleFilterChange = useCallback(
     (event: { target: { value: string } }) => {
       dispatch(setDailyNewsFilter(event.target.value));
-      dispatch(setCurrentPage(1));
     },
     [dispatch]
   );

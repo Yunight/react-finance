@@ -1,14 +1,17 @@
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { setCurrentPage } from "@/redux/tickerSlice";
-import { useMemo, useTransition } from "react";
+import { useAppSelector } from "@/redux/store";
+import { useEffect, useMemo, useState, useTransition } from "react";
 
 export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
   if (!Array.isArray(items)) {
     throw new Error("items must be an array");
   }
-  const currentPage = useAppSelector((state) => state.ticker.currentPage);
-  const dispatch = useAppDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [isPending, startTransition] = useTransition();
+  const dailyTickersFilter = useAppSelector(
+    (state) => state.ticker.dailyTickersFilter
+  );
 
   const handleNextTransition = () => {
     startTransition(() => {
@@ -23,11 +26,11 @@ export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
   };
 
   const handleNext = () => {
-    dispatch(setCurrentPage(currentPage + 1));
+    setCurrentPage(currentPage + 1);
   };
 
   const handlePrevious = () => {
-    dispatch(setCurrentPage(currentPage - 1));
+    setCurrentPage(currentPage - 1);
   };
 
   const currentItems = useMemo(() => {
@@ -37,6 +40,12 @@ export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
   }, [items, currentPage, itemsPerPage]);
 
   const totalPages = Math.ceil(items.length / itemsPerPage);
+
+  useEffect(() => {
+    if (dailyTickersFilter) {
+      setCurrentPage(1);
+    }
+  }, [dailyTickersFilter]);
 
   return {
     handleNext: handleNextTransition,

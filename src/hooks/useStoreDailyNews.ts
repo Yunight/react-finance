@@ -10,7 +10,7 @@ const useStoredDailyNews = (fetchAndStoreData: FetchAndStoreDataFunction) => {
   useEffect(() => {
     const currentDate = new Date();
     const yesterday = new Date(currentDate);
-    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setDate(yesterday.getDate() - 2);
     const year = yesterday.getFullYear();
     const month = ("0" + (yesterday.getMonth() + 1)).slice(-2);
     const day = ("0" + yesterday.getDate()).slice(-2);
