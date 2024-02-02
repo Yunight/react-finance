@@ -7,11 +7,21 @@ interface NewsCardItemProps {
 
 const NewsCardItem = ({ result }: NewsCardItemProps) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isImage, setIsImage] = useState(false);
 
   useEffect(() => {
     const img = new Image();
     img.src = result.image_url;
-    img.onload = () => setIsLoading(false);
+
+    img.onload = () => {
+      setIsLoading(false);
+      setIsImage(true);
+    };
+
+    img.onerror = () => {
+      setIsLoading(false);
+      setIsImage(false);
+    };
   }, [result.image_url]);
 
   return (
@@ -23,7 +33,11 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
           </div>
         ) : (
           <img
-            src={result.image_url}
+            src={
+              isImage
+                ? result.image_url
+                : "https://placehold.co/384x192?text=Image+not+found"
+            }
             alt={result.title}
             className="w-full h-48 "
           />
