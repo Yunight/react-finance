@@ -12,7 +12,7 @@ interface TickerState {
   error: string | null;
   selectedTicker: AllTickerDetails | null;
   sma: SmaResponse | null;
-  dailyNews: ResultItem[];
+  dailyTickers: ResultItem[];
   newsResponse: TickerNewsResponse | null;
   searchInput: string;
   nextStockValueUpdate: string;
@@ -24,7 +24,7 @@ const initialState: TickerState = {
   error: null,
   selectedTicker: null,
   sma: null,
-  dailyNews: [],
+  dailyTickers: [],
   newsResponse: null,
   searchInput: "",
   nextStockValueUpdate: "",
@@ -75,7 +75,7 @@ const tickerSlice = createSlice({
       state.error = null;
     },
     getDailyNewsDataSuccess: (state, action: PayloadAction<ResultItem[]>) => {
-      state.dailyNews = action.payload;
+      state.dailyTickers = action.payload;
       state.loading = false;
     },
     getDailyNewsDataFailure: (state, action: PayloadAction<string>) => {
@@ -88,7 +88,7 @@ const tickerSlice = createSlice({
       state.error = initialState.error;
       state.selectedTicker = initialState.selectedTicker;
       state.sma = initialState.sma;
-      state.dailyNews = initialState.dailyNews;
+      state.dailyTickers = initialState.dailyTickers;
     },
     getNewsDataStart: (state) => {
       state.loading = true;

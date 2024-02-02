@@ -1,8 +1,3 @@
-import { useAppDispatch } from "@/redux/store";
-import { getDailyNewsDataSuccess } from "@/redux/tickerSlice";
-
-import { useEffect, useMemo, useState } from "react";
-
 import {
   Card,
   CardHeader,
@@ -18,16 +13,15 @@ import ContentTitleDisplay from "./ContentTitleDisplay";
 import { usePagination } from "@/hooks/usePagination";
 import { NUMBER_OF_DAILY_PER_PAGE } from "@/consts/consts";
 import Pagination from "./Pagination";
+import useStoredDailyNews from "@/hooks/useStoreDailyNews";
+import { useMemo, useState } from "react";
 
 const DailyTickersDisplay = () => {
-  const dispatch = useAppDispatch();
   const itemsPerPage = NUMBER_OF_DAILY_PER_PAGE;
-
   const [filter, setFilter] = useState("");
-
   const { fetchAndStoreData, dailyNews, handleFilterChange } =
     useDailyTickers(setFilter);
-
+  useStoredDailyNews(fetchAndStoreData);
   const filteredItems = useMemo(() => {
     return dailyNews.filter((item) =>
       item.T.toLowerCase().includes(filter.toLowerCase())
@@ -36,29 +30,6 @@ const DailyTickersDisplay = () => {
 
   const { handleNext, handlePrevious, currentItems, currentPage, totalPages } =
     usePagination(1, itemsPerPage, filteredItems);
-
-  useEffect(() => {
-    const currenTableCellate = new Date();
-    const yesterday = new Date(currenTableCellate);
-    yesterday.setDate(yesterday.getDate() - 1);
-    const year = yesterday.getFullYear();
-    const month = ("0" + (yesterday.getMonth() + 1)).slice(-2);
-    const day = ("0" + yesterday.getDate()).slice(-2);
-    const formattedDate = `${year}-${month}-${day}`;
-
-    const storedData = localStorage.getItem("dailyNews");
-
-    if (storedData) {
-      const { date, results } = JSON.parse(storedData);
-      if (date === formattedDate) {
-        dispatch(getDailyNewsDataSuccess(results));
-      } else {
-        fetchAndStoreData(formattedDate);
-      }
-    } else {
-      fetchAndStoreData(formattedDate);
-    }
-  }, [dispatch, fetchAndStoreData, filter]);
 
   return (
     <>

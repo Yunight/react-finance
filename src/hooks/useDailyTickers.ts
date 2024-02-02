@@ -10,7 +10,7 @@ export function useDailyTickers(
   setFilter: React.Dispatch<React.SetStateAction<string>>
 ) {
   const dispatch = useAppDispatch();
-  const dailyNews = useAppSelector((state) => state.ticker.dailyNews);
+  const dailyNews = useAppSelector((state) => state.ticker.dailyTickers);
 
   const handleFilterChange = useCallback(
     (event: { target: { value: string } }) => {
@@ -20,8 +20,8 @@ export function useDailyTickers(
   );
 
   const fetchAndStoreData = useCallback(
-    (date: string) => {
-      getGroupedDaily({ date })
+    (date: string): Promise<void> => {
+      return getGroupedDaily({ date })
         .then((res) => {
           localStorage.setItem(
             "dailyNews",
@@ -29,7 +29,10 @@ export function useDailyTickers(
           );
           dispatch(getDailyNewsDataSuccess(res.results));
         })
-        .catch((error) => dispatch(getDailyNewsDataFailure(error.message)));
+        .catch((error) => {
+          dispatch(getDailyNewsDataFailure(error.message));
+          return void 0;
+        });
     },
     [dispatch]
   );
