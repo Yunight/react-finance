@@ -23,10 +23,8 @@ const NewsCardDisplay = () => {
   } = usePagination(ARTICLES_PER_PAGE, results || []);
 
   useEffect(() => {
-    if (currentPage > totalPages) {
-      dispatch(setCurrentPage(1));
-    }
-  }, [currentPage, totalPages, dispatch]);
+    dispatch(setCurrentPage(1));
+  }, [dispatch]);
 
   return (
     <>
