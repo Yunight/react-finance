@@ -69,7 +69,6 @@ export const useAutoCompleteSearch = () => {
           cancelToken.current.cancel();
         }
         cancelToken.current = axios.CancelToken.source();
-
         fetchDataWithDelay();
       }
     },
@@ -88,7 +87,7 @@ export const useAutoCompleteSearch = () => {
     (suggestion: AllTickerDetails) => {
       setShowSuggestions(false);
       dispatch(selectedTicker(suggestion));
-
+      dispatch(setSearchInput(suggestion.name));
       dispatch(getSmaStart());
 
       getSma(suggestion.ticker)

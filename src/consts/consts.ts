@@ -1,1 +1,1 @@
-export const BASE_TIMER = 30;
+export const BASE_TIMER = 1;

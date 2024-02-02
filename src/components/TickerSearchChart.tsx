@@ -13,8 +13,13 @@ import { min, max } from "d3-array";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useMemo } from "react";
 import { getSma } from "@/api/polygonApi";
-import { getSmaFailure, getSmaStart, getSmaSuccess } from "@/redux/tickerSlice";
-import { dateConvert } from "@/lib/utils";
+import {
+  getSmaFailure,
+  getSmaStart,
+  getSmaSuccess,
+  setNextStockValueUpdate,
+} from "@/redux/tickerSlice";
+import { dateConvert, getCurrentTimePlusXMins } from "@/lib/utils";
 import { BASE_TIMER } from "@/consts/consts";
 
 const TickerStockChart = () => {
@@ -36,6 +41,7 @@ const TickerStockChart = () => {
             dispatch(
               getSmaSuccess({ results: { values: data.results.values } })
             );
+            dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
           })
           .catch((error) => dispatch(getSmaFailure(error.message)));
       }, BASE_TIMER * 60 * 1000);
@@ -67,7 +73,7 @@ const TickerStockChart = () => {
     return null;
   }
   return (
-    <Card className="w-full mb-4 animate-out duration-1000">
+    <Card className="w-full mb-4 animate-out duration-1000 mt-5">
       <CardHeader>
         <CardTitle>Simple Moving Average (SMA)</CardTitle>
         <Separator />

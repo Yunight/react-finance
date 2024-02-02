@@ -14,7 +14,7 @@ const TickerDetails = () => {
   }
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 mt-5">
       <Card>
         <CardHeader>
           <CardTitle className="font-semibold leading-none tracking-tight">
