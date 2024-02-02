@@ -34,9 +34,9 @@ The application consists of three main pages and one feature:
 
 ### Search
 
-- Implements search with auto-completion for retrieving data from a specific ticker, including its last stock value, which is updated every configurable number of minutes.
+- Implements search with auto-completion for retrieving data from a specific ticker.
 - Suggestions are stored in Redux.
-- A new API call is made if the input changes, with the results stored in Redux.
+- A new API call is made if the input changes after 500ms to avoid many calls at each input change, with the results stored in Redux.
 - Upon selection, the application makes another API call to fetch the Simple Moving Average (SMA) and displays the graph.
 - Displays the latest stock value and updates it at a user-configured interval.
 
