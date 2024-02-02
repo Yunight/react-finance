@@ -1,34 +1,73 @@
-# Challenge technique done with React + Vite + Typescript + Redux
 
-- git clone https://github.com/Yunight/react-finance
-- cd folder
-- npm install
-- npm run dev
+# Technical Challenge: React Finance Dashboard
 
-create .env file and create and variable VITE_APP_SECRET = SECRET_TOKEN
+This project is built using React, Vite, TypeScript, Redux and DaisyUI. 
 
-get your SECRET_TOKEN from [https://api.polygon.io/](https://polygon.io/)
+## Getting Started
 
-There are 3 pages :
+To get started, follow these steps:
 
- - Daily : get all the data from all Tickers from yesterday since we don't can't access to current day with free plan,
-    - we can filter
-    - navigate
-    - datas are store to localstorage & redux until tomorrow to avoid repetitive calls since datas will be the same
- - Search : Search with auto completion to get data from a specific Ticker and his last stock value is updated every X mins ( configurable )
-    - suggestions list is stored into redux
-    - if input change we do an other call and store again in redux
-    - once selected we call again an api in order to get Simple Moving Average (SMA) and display the graph
-    - we display the latest stock value and update every x min configured 
- - News : get All news from the api related to tickers
-   - data are the latests one everytime we access to it
-   - data are stored in redux store
+```bash
+git clone https://github.com/Yunight/react-finance.git 
+cd react-finance 
+npm install 
+npm run dev
+```
 
+Create a `.env.local` file and add the following variable:
 
-there is a const file for all the const values :
-- export const BASE_TIMER = 1;
-- export const NUMBER_OF_DAILY_PER_PAGE = 18;
-- export const NUMBER_OF_NEWS = 18;
-- export const ARTICLES_PER_PAGE = 6;
+```makefile
+VITE_APP_SECRET=SECRET_TOKEN
+```
 
-component folders with all the components, hooks folder for custom hooks, api folder for the api,
+Obtain your `SECRET_TOKEN` from Polygon.io API. 
+
+## Features
+
+The application consists of three main pages and one feature:
+
+### Daily
+
+- Retrieves all ticker data from the previous day, as the current day's data is unavailable with the free plan.
+- Allows filtering and navigation.
+- Data are stored in both local storage and Redux to minimize redundant API calls, as the data remains unchanged until the next day.
+
+### Search
+
+- Implements search with auto-completion for retrieving data from a specific ticker.
+- Suggestions are stored in Redux.
+- A new API call is made if the input changes after 500ms to avoid many calls at each input change, with the results stored in Redux.
+- Upon selection, the application makes another API call to fetch the Simple Moving Average (SMA) and displays the graph.
+- Displays the latest stock value and updates it at a user-configured interval.
+
+### News
+
+- Fetches all news related to tickers from the API.
+- Ensures data are the latest every time the page is accessed.
+- Stores data in the Redux store.
+
+### Theme Manager
+
+- on the top right of the screen there are 2 lists, one is for switching to a light theme and the other dark, try to play with them !
+
+## Configuration
+
+A constants file contains all the constant values for the application:
+
+```arduino
+export const BASE_TIMER = 1; 
+export const NUMBER_OF_DAILY_PER_PAGE = 18; 
+export const NUMBER_OF_NEWS = 18; 
+export const ARTICLES_PER_PAGE = 6;
+```
+
+## Errors handling
+ - Errors are stored in redux store, and displayed with a toast 
+
+## Project Structure
+
+- `components` folder contains all UI components.
+- `hooks` folder for custom React hooks.
+- `api` folder for API integration.
+
+---
