@@ -93,7 +93,6 @@ export const ARTICLES_PER_PAGE = 6;
     - `TickerSearchValue.tsx`
   - `consts`
     - `consts.ts`
-  - `data`
   - `hooks`
     - `useDailyTickers.ts`
     - `useFetchDailyData.ts`
