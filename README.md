@@ -39,6 +39,7 @@ The application consists of three main pages and one feature:
 - A new API call is made if the input changes after 500ms to avoid many calls at each input change, with the results stored in Redux.
 - Upon selection, the application makes another API call to fetch the Simple Moving Average (SMA) and displays the graph.
 - Displays the latest stock value and updates it at a user-configured interval.
+- You can change page and the value will be kept however since we clear the interval everytime to avoid any side effect in useEffect, next update timing is also updated to have the correct value
 
 ### News
 
