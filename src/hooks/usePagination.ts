@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
 
 export const usePagination = <T>(
   initialPage: number,
@@ -6,6 +6,20 @@ export const usePagination = <T>(
   items: T[]
 ) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
+
+  const [isPending, startTransition] = useTransition();
+
+  const handleNextTransition = () => {
+    startTransition(() => {
+      handleNext();
+    });
+  };
+
+  const handlePreviousTransition = () => {
+    startTransition(() => {
+      handlePrevious();
+    });
+  };
 
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
@@ -23,5 +37,12 @@ export const usePagination = <T>(
 
   const totalPages = Math.ceil(items.length / itemsPerPage);
 
-  return { handleNext, handlePrevious, currentItems, currentPage, totalPages };
+  return {
+    handleNext: handleNextTransition,
+    handlePrevious: handlePreviousTransition,
+    isPending,
+    currentItems,
+    currentPage,
+    totalPages,
+  };
 };

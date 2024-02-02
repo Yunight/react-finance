@@ -1,6 +1,6 @@
 import AutoCompleteSearch from "./TickerSearchInput";
 import TickerSearchInput from "./DailyTickersDisplay";
-import NewsCard from "./NewsCardDisplay";
+import NewsCardDisplay from "./NewsCardDisplay";
 import TickerDetails from "./TickerSearchDetails";
 import TickerStockChart from "./TickerSearchChart";
 import TickerStockValue from "./TickerSearchValue";
@@ -26,7 +26,7 @@ const Search = () => (
 
 const News = () => (
   <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-    <NewsCard />
+    <NewsCardDisplay />
   </main>
 );
 

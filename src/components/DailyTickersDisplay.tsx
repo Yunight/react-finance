@@ -1,13 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { getDailyNewsDataSuccess } from "@/redux/tickerSlice";
 
-import {
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   Card,
@@ -28,10 +22,11 @@ import Pagination from "./Pagination";
 const DailyTickersDisplay = () => {
   const dispatch = useAppDispatch();
   const itemsPerPage = NUMBER_OF_DAILY_PER_PAGE;
-  const dailyNews = useAppSelector((state) => state.ticker.dailyNews);
+
   const [filter, setFilter] = useState("");
 
-  const { fetchAndStoreData } = useDailyTickers();
+  const { fetchAndStoreData, dailyNews, handleFilterChange } =
+    useDailyTickers(setFilter);
 
   const filteredItems = useMemo(() => {
     return dailyNews.filter((item) =>
@@ -64,13 +59,6 @@ const DailyTickersDisplay = () => {
       fetchAndStoreData(formattedDate);
     }
   }, [dispatch, fetchAndStoreData, filter]);
-
-  const handleFilterChange = useCallback(
-    (event: { target: { value: SetStateAction<string> } }) => {
-      setFilter(event.target.value);
-    },
-    []
-  );
 
   return (
     <>

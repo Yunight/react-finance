@@ -1,13 +1,23 @@
-import { useCallback } from "react";
-import { getGroupedDaily } from "@/api/polygonApi";
-import { useAppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getDailyNewsDataFailure,
   getDailyNewsDataSuccess,
 } from "@/redux/tickerSlice";
+import { getGroupedDaily } from "@/api/polygonApi";
+import { useCallback } from "react";
 
-export function useDailyTickers() {
+export function useDailyTickers(
+  setFilter: React.Dispatch<React.SetStateAction<string>>
+) {
   const dispatch = useAppDispatch();
+  const dailyNews = useAppSelector((state) => state.ticker.dailyNews);
+
+  const handleFilterChange = useCallback(
+    (event: { target: { value: string } }) => {
+      setFilter(event.target.value);
+    },
+    [setFilter]
+  );
 
   const fetchAndStoreData = useCallback(
     (date: string) => {
@@ -24,5 +34,5 @@ export function useDailyTickers() {
     [dispatch]
   );
 
-  return { fetchAndStoreData };
+  return { fetchAndStoreData, dailyNews, handleFilterChange };
 }
