@@ -14,14 +14,17 @@ import { usePagination } from "@/hooks/usePagination";
 import { NUMBER_OF_DAILY_PER_PAGE } from "@/consts/consts";
 import Pagination from "./Pagination";
 import useStoredDailyNews from "@/hooks/useStoreDailyNews";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useAppSelector } from "@/redux/store";
 
 const DailyTickersDisplay = () => {
-  const itemsPerPage = NUMBER_OF_DAILY_PER_PAGE;
-  const [filter, setFilter] = useState("");
+  const filter = useAppSelector((state) => state.ticker.dailyTickersFilter);
+
   const { fetchAndStoreData, dailyNews, handleFilterChange } =
-    useDailyTickers(setFilter);
+    useDailyTickers();
+
   useStoredDailyNews(fetchAndStoreData);
+
   const filteredItems = useMemo(() => {
     return dailyNews.filter((item) =>
       item.T.toLowerCase().includes(filter.toLowerCase())
@@ -29,7 +32,7 @@ const DailyTickersDisplay = () => {
   }, [dailyNews, filter]);
 
   const { handleNext, handlePrevious, currentItems, currentPage, totalPages } =
-    usePagination(1, itemsPerPage, filteredItems);
+    usePagination(NUMBER_OF_DAILY_PER_PAGE, filteredItems);
 
   return (
     <>

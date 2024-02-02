@@ -9,7 +9,6 @@ import { ARTICLES_PER_PAGE } from "@/consts/consts";
 const NewsCardDisplay = () => {
   const results = useNews();
 
-  const itemsPerPage = ARTICLES_PER_PAGE;
   const {
     handleNext,
     handlePrevious,
@@ -17,7 +16,7 @@ const NewsCardDisplay = () => {
     currentPage,
     totalPages,
     isPending,
-  } = usePagination(1, itemsPerPage, results || []);
+  } = usePagination(1, ARTICLES_PER_PAGE, results || []);
 
   return (
     <>

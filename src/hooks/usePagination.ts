@@ -1,12 +1,10 @@
-import { useMemo, useState, useTransition } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { setCurrentPage } from "@/redux/tickerSlice";
+import { useMemo, useTransition } from "react";
 
-export const usePagination = <T>(
-  initialPage: number,
-  itemsPerPage: number,
-  items: T[]
-) => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
-
+export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
+  const currentPage = useAppSelector((state) => state.ticker.currentPage);
+  const dispatch = useAppDispatch();
   const [isPending, startTransition] = useTransition();
 
   const handleNextTransition = () => {
@@ -22,11 +20,11 @@ export const usePagination = <T>(
   };
 
   const handleNext = () => {
-    setCurrentPage(currentPage + 1);
+    dispatch(setCurrentPage(currentPage + 1));
   };
 
   const handlePrevious = () => {
-    setCurrentPage(currentPage - 1);
+    dispatch(setCurrentPage(currentPage - 1));
   };
 
   const currentItems = useMemo(() => {
@@ -44,5 +42,6 @@ export const usePagination = <T>(
     currentItems,
     currentPage,
     totalPages,
+    setCurrentPage,
   };
 };

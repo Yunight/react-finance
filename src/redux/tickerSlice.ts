@@ -13,9 +13,11 @@ interface TickerState {
   selectedTicker: AllTickerDetails | null;
   sma: SmaResponse | null;
   dailyTickers: ResultItem[];
+  dailyTickersFilter: string;
   newsResponse: TickerNewsResponse | null;
   searchInput: string;
   nextStockValueUpdate: string;
+  currentPage: number;
 }
 
 const initialState: TickerState = {
@@ -25,9 +27,11 @@ const initialState: TickerState = {
   selectedTicker: null,
   sma: null,
   dailyTickers: [],
+  dailyTickersFilter: "",
   newsResponse: null,
   searchInput: "",
   nextStockValueUpdate: "",
+  currentPage: 1,
 };
 
 const tickerSlice = createSlice({
@@ -82,6 +86,9 @@ const tickerSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    setDailyNewsFilter: (state, action: PayloadAction<string>) => {
+      state.dailyTickersFilter = action.payload;
+    },
     resetData: (state) => {
       state.data = initialState.data;
       state.loading = initialState.loading;
@@ -111,6 +118,9 @@ const tickerSlice = createSlice({
     resetNextStockValueUpdate: (state) => {
       state.nextStockValueUpdate = initialState.nextStockValueUpdate;
     },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
   },
 });
 
@@ -128,6 +138,7 @@ export const {
   getDailyNewsDataStart,
   getDailyNewsDataSuccess,
   getDailyNewsDataFailure,
+  setDailyNewsFilter,
   resetData,
   getNewsDataStart,
   getNewsDataSuccess,
@@ -135,6 +146,7 @@ export const {
   resetError,
   setNextStockValueUpdate,
   resetNextStockValueUpdate,
+  setCurrentPage,
 } = tickerSlice.actions;
 
 export default tickerSlice.reducer;
