@@ -7,6 +7,7 @@ import Pagination from "./Pagination"; // import the Pagination component
 import { ARTICLES_PER_PAGE } from "@/consts/consts";
 import { useAppDispatch } from "@/redux/store";
 import { setCurrentPage } from "@/redux/tickerSlice";
+import { useEffect } from "react";
 
 const NewsCardDisplay = () => {
   const results = useNews();
@@ -20,9 +21,13 @@ const NewsCardDisplay = () => {
     totalPages,
     isPending,
   } = usePagination(ARTICLES_PER_PAGE, results || []);
-  if (currentPage > totalPages) {
-    dispatch(setCurrentPage(1));
-  }
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      dispatch(setCurrentPage(1));
+    }
+  }, [currentPage, totalPages, dispatch]);
+
   return (
     <>
       <ContentTitleDisplay text="Latest News on Tickers !" />
