@@ -35,7 +35,7 @@ const TickerStockValue = () => {
         </CardHeader>
         <CardContent>
           <div className="stat">
-            <div className="stat-figure text-base-300">
+            <div className="stat-figure text-success">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
