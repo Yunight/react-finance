@@ -12,9 +12,11 @@ import {
   getSmaStart,
   getSmaSuccess,
   getSmaFailure,
+  setNextStockValueUpdate,
 } from "@/redux/tickerSlice";
 import { getTickers, getSma } from "@/api/polygonApi";
 import { AllTickerDetails } from "@/types/types";
+import { getCurrentTimePlus30Mins } from "@/lib/utils";
 
 export const useAutoCompleteSearch = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -33,7 +35,10 @@ export const useAutoCompleteSearch = () => {
 
       if (cancelToken.current) {
         getTickers(value, cancelToken.current.token)
-          .then((data) => dispatch(fetchDataSuccess(data.results)))
+          .then((data) => {
+            dispatch(fetchDataSuccess(data.results));
+            dispatch(setNextStockValueUpdate(getCurrentTimePlus30Mins()));
+          })
           .catch((error) => {
             if (axios.isCancel(error)) {
               console.log("Request canceled", error.message);

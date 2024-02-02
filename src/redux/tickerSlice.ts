@@ -15,6 +15,7 @@ interface TickerState {
   kpiData: ResultItem[];
   newsData: TickerNewsResult[];
   searchInput: string;
+  nextStockValueUpdate: string;
 }
 
 const initialState: TickerState = {
@@ -26,6 +27,7 @@ const initialState: TickerState = {
   kpiData: [],
   newsData: [],
   searchInput: "",
+  nextStockValueUpdate: "",
 };
 
 const tickerSlice = createSlice({
@@ -103,6 +105,12 @@ const tickerSlice = createSlice({
     resetError: (state) => {
       state.error = null;
     },
+    setNextStockValueUpdate: (state, action: PayloadAction<string>) => {
+      state.nextStockValueUpdate = action.payload;
+    },
+    resetNextStockValueUpdate: (state) => {
+      state.nextStockValueUpdate = initialState.nextStockValueUpdate;
+    },
   },
 });
 
@@ -125,6 +133,8 @@ export const {
   getNewsDataSuccess,
   getNewsDataFailure,
   resetError,
+  setNextStockValueUpdate,
+  resetNextStockValueUpdate,
 } = tickerSlice.actions;
 
 export default tickerSlice.reducer;

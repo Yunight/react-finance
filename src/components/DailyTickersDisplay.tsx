@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 
-import { Button } from "./ui/button";
 import {
   Card,
   CardHeader,
@@ -18,20 +17,19 @@ import {
   CardContent,
 } from "./ui/card";
 
-import { Input } from "@/components/ui/input";
 import { Separator } from "./ui/separator";
+import { useDailyTickers } from "@/hooks/useDailyTickers";
+import DailyTickersTable from "./DailyTickersTable";
+import ContentTitleDisplay from "./ContentTitleDisplay";
 
-import { useKpiData } from "@/hooks/useKpiData";
-import KpiTable from "./KpiTable";
-
-const DashboardKpiExamples = () => {
+const DailyTickersDisplay = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 18;
   const kpiData = useAppSelector((state) => state.ticker.kpiData);
   const [filter, setFilter] = useState("");
 
-  const { fetchAndStoreData } = useKpiData();
+  const { fetchAndStoreData } = useDailyTickers();
 
   const filteredItems = useMemo(() => {
     return kpiData.filter((item) =>
@@ -42,7 +40,7 @@ const DashboardKpiExamples = () => {
   useEffect(() => {
     const currenTableCellate = new Date();
     const yesterday = new Date(currenTableCellate);
-    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setDate(yesterday.getDate() - 2);
     const year = yesterday.getFullYear();
     const month = ("0" + (yesterday.getMonth() + 1)).slice(-2);
     const day = ("0" + yesterday.getDate()).slice(-2);
@@ -89,40 +87,65 @@ const DashboardKpiExamples = () => {
 
   return (
     <>
-      <div className="flex items-center space-x-2 mb-8 ">
-        <div className="text-2xl">
-          Display and Filter - Grouped Daily Tickers
-        </div>
-      </div>
-
+      <ContentTitleDisplay text="Display and Filter - Grouped Daily Tickers" />
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center gap-4">
-          <Input
+          <input
             type="text"
             placeholder="Filter here"
             onChange={handleFilterChange}
-            className="border-2 border-gray-300 rounded-md p-2 min-w-1/3"
+            className="input input-bordered w-full max-w-xs"
           />
         </div>
-        <div className="">{filteredItems.length} results</div>
-        <div className="flex gap-8">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          <div className="flex items-center justify-center text-sm text-muted-foreground">
-            Page {currentPage} of {totalPages}
+        <div className="stats shadow bg-base-200">
+          <div className="stat">
+            <div className="stat-figure ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-8 h-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+
+            <div className="stat-title">Total Results</div>
+            <div className="stat-value">{filteredItems.length}</div>
+            <div className="stat-desc">
+              {filteredItems.length > 9000 ? "It's over 9000 !" : null}
+            </div>
           </div>
-          <Button
-            variant="outline"
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </Button>
+        </div>
+        <div className="flex gap-8">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={handlePrevious}
+              disabled={currentPage === 1 || filteredItems.length === 0}
+            >
+              «
+            </button>
+            <button className="join-item btn">
+              {currentPage === 1 && filteredItems.length === 0
+                ? ` No result`
+                : `Page ${currentPage} of ${totalPages}`}
+            </button>
+            <button
+              className="join-item btn "
+              onClick={handleNext}
+              disabled={
+                currentPage === totalPages || filteredItems.length === 0
+              }
+            >
+              »
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex justify-stretch w-screen flex-wrap max-w-7xl mx-auto gap-20">
@@ -136,7 +159,7 @@ const DashboardKpiExamples = () => {
               <Separator />
             </CardHeader>
             <CardContent>
-              <KpiTable item={item} />
+              <DailyTickersTable item={item} />
             </CardContent>
           </Card>
         ))}
@@ -145,4 +168,4 @@ const DashboardKpiExamples = () => {
   );
 };
 
-export default DashboardKpiExamples;
+export default DailyTickersDisplay;
