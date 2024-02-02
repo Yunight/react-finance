@@ -1,6 +1,3 @@
-Sure, here's your text formatted in Markdown:
-
----
 
 # Technical Challenge: React Finance Dashboard
 
