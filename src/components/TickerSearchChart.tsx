@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
-  LineChart,
+  AreaChart,
   CartesianGrid,
   XAxis,
   YAxis,
   Tooltip,
-  Line,
+  Area,
 } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -83,7 +83,7 @@ const TickerStockChart = () => {
         <Separator />
       </CardHeader>
       <CardContent>
-        <LineChart width={500} height={300} data={sortedData}>
+        <AreaChart width={500} height={300} data={sortedData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey="timestamp"
@@ -98,8 +98,13 @@ const TickerStockChart = () => {
             labelFormatter={(timestamp) => dateConvert(timestamp)}
             formatter={(value) => [`$${value}`, "Value"]}
           />
-          <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-        </LineChart>
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke="#82ca9d"
+            fill="#82ca9d"
+          />
+        </AreaChart>
       </CardContent>
     </Card>
   );
