@@ -41,11 +41,15 @@ const TickerStockChart = () => {
             dispatch(
               getSmaSuccess({ results: { values: data.results.values } })
             );
+
             dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
           })
           .catch((error) => dispatch(getSmaFailure(error.message)));
       }, BASE_TIMER * 60 * 1000);
-      return () => clearInterval(intervalId);
+      return () => {
+        clearInterval(intervalId);
+        dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
+      };
     }
   }, [dispatch, selectedTickerData]);
 
