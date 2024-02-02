@@ -1,7 +1,7 @@
 
 # Technical Challenge: React Finance Dashboard
 
-This project is built using React, Vite, TypeScript, and Redux. 
+This project is built using React, Vite, TypeScript, Redux and DaisyUI. 
 
 ## Getting Started
 
@@ -60,6 +60,9 @@ export const NUMBER_OF_DAILY_PER_PAGE = 18;
 export const NUMBER_OF_NEWS = 18; 
 export const ARTICLES_PER_PAGE = 6;
 ```
+
+## Errors handling
+ - Errors are stored in redux store, and displayed with a toast 
 
 ## Project Structure
 
