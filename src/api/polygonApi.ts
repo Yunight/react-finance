@@ -53,7 +53,11 @@ export async function getTickers(
 
     return response.data;
   } catch (error) {
-    throw new Error(`API request failed with status ${error}`);
+    if (error instanceof Error) {
+      throw new Error(`API request failed with status ${error.message}`);
+    } else {
+      throw new Error(`API request failed with status ${error}`);
+    }
   }
 }
 
@@ -73,7 +77,11 @@ export async function getSma(
 
     return response.data;
   } catch (error) {
-    throw new Error(`API request failed with status ${error}`);
+    if (error instanceof Error) {
+      throw new Error(`API request failed with status ${error.message}`);
+    } else {
+      throw new Error(`API request failed with status ${error}`);
+    }
   }
 }
 
@@ -94,7 +102,11 @@ export async function getGroupedDaily(
 
     return response.data;
   } catch (error) {
-    throw new Error(`API request failed with status ${error}`);
+    if (error instanceof Error) {
+      throw new Error(`API request failed with status ${error.message}`);
+    } else {
+      throw new Error(`API request failed with status ${error}`);
+    }
   }
 }
 
@@ -115,6 +127,10 @@ export async function getTickerNews(
 
     return response.data;
   } catch (error) {
-    throw new Error(`API request failed with status ${error}`);
+    if (error instanceof Error) {
+      throw new Error(`API request failed with status ${error.message}`);
+    } else {
+      throw new Error(`API request failed with status ${error}`);
+    }
   }
 }

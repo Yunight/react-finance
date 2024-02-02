@@ -1,13 +1,13 @@
-import AutoCompleteSearch from "./AutoCompleteSearch";
-import KpiDisplay from "./KpiDisplay";
+import AutoCompleteSearch from "./TickerSearchInput";
+import TickerSearchInput from "./DailyTickersDisplay";
 import NewsCard from "./NewsCard";
-import TickerDetails from "./TickerDetails";
-import TickerStockChart from "./TickerStockChart";
-import TickerStockValue from "./TickerStockValue";
+import TickerDetails from "./TickerSearchDetails";
+import TickerStockChart from "./TickerSearchChart";
+import TickerStockValue from "./TickerSearchValue";
 
 const Daily = () => (
   <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 ">
-    <KpiDisplay />
+    <TickerSearchInput />
   </main>
 );
 

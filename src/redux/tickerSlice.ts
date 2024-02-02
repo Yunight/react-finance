@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   AllTickerDetails,
   SmaResponse,
-  TickerNewsResponse,
+  TickerNewsResult,
 } from "../types/types";
 import { ResultItem } from "../types/types";
 
@@ -13,8 +13,9 @@ interface TickerState {
   selectedTicker: AllTickerDetails | null;
   sma: SmaResponse | null;
   kpiData: ResultItem[];
-  newsData: TickerNewsResponse[];
+  newsData: TickerNewsResult[];
   searchInput: string;
+  nextStockValueUpdate: string;
 }
 
 const initialState: TickerState = {
@@ -26,6 +27,7 @@ const initialState: TickerState = {
   kpiData: [],
   newsData: [],
   searchInput: "",
+  nextStockValueUpdate: "",
 };
 
 const tickerSlice = createSlice({
@@ -92,10 +94,7 @@ const tickerSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getNewsDataSuccess: (
-      state,
-      action: PayloadAction<TickerNewsResponse[]>
-    ) => {
+    getNewsDataSuccess: (state, action: PayloadAction<TickerNewsResult[]>) => {
       state.newsData = action.payload;
       state.loading = false;
     },
@@ -105,6 +104,12 @@ const tickerSlice = createSlice({
     },
     resetError: (state) => {
       state.error = null;
+    },
+    setNextStockValueUpdate: (state, action: PayloadAction<string>) => {
+      state.nextStockValueUpdate = action.payload;
+    },
+    resetNextStockValueUpdate: (state) => {
+      state.nextStockValueUpdate = initialState.nextStockValueUpdate;
     },
   },
 });
@@ -128,6 +133,8 @@ export const {
   getNewsDataSuccess,
   getNewsDataFailure,
   resetError,
+  setNextStockValueUpdate,
+  resetNextStockValueUpdate,
 } = tickerSlice.actions;
 
 export default tickerSlice.reducer;

@@ -19,6 +19,7 @@ import { dateConvert } from "@/lib/utils";
 const TickerStockChart = () => {
   const values = useAppSelector((state) => state.ticker.sma?.results.values);
   const isLoading = useAppSelector((state) => state.ticker.loading);
+
   const dispatch = useAppDispatch();
 
   const selectedTickerData = useAppSelector(
@@ -30,11 +31,11 @@ const TickerStockChart = () => {
       const intervalId = setInterval(() => {
         dispatch(getSmaStart());
         getSma(selectedTickerData.ticker)
-          .then((data) =>
+          .then((data) => {
             dispatch(
               getSmaSuccess({ results: { values: data.results.values } })
-            )
-          )
+            );
+          })
           .catch((error) => dispatch(getSmaFailure(error.message)));
       }, 30 * 60 * 1000);
       return () => clearInterval(intervalId);

@@ -13,3 +13,13 @@ export const dateConvert = (dataDate: string | number | Date) => {
 
   return `${day}-${month}-${year}`;
 };
+
+export const getCurrentTimePlus30Mins = (): string => {
+  const date = new Date();
+  date.setMinutes(date.getMinutes() + 30);
+
+  const hours = ("0" + date.getHours()).slice(-2);
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+  const seconds = ("0" + date.getSeconds()).slice(-2);
+  return `${hours}:${minutes}:${seconds}`;
+};

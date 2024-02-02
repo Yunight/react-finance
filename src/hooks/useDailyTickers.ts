@@ -3,7 +3,7 @@ import { getGroupedDaily } from "@/api/polygonApi";
 import { useAppDispatch } from "@/redux/store";
 import { getKpiDataFailure, getKpiDataSuccess } from "@/redux/tickerSlice";
 
-export function useKpiData() {
+export function useDailyTickers() {
   const dispatch = useAppDispatch();
 
   const fetchAndStoreData = useCallback(
