@@ -94,7 +94,7 @@ const DailyTickersDisplay = () => {
             type="text"
             placeholder="Filter here"
             onChange={handleFilterChange}
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-xs font-semibold placeholder:italic"
           />
         </div>
         <div className="stats shadow bg-base-200">
