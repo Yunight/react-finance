@@ -27,7 +27,7 @@ const TickerStockValue = () => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex gap-4">
       <Card className="w-1/2 mb-4">
         <CardHeader>
           <CardTitle>Latest Stock Value</CardTitle>
