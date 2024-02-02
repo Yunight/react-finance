@@ -49,7 +49,7 @@ The application consists of three main pages and one feature:
 ### Theme Manager
 
 - on the top right of the screen there are 2 lists, one is for switching to a light theme and the other dark, try to play with them !
-
+- one toggle button is also here, must choose "light" theme first
 ## Configuration
 
 A constants file contains all the constant values for the application:
