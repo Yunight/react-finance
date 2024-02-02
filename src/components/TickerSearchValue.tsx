@@ -35,7 +35,7 @@ const TickerStockValue = () => {
         </CardHeader>
         <CardContent>
           <div className="stat">
-            <div className="stat-figure text-secondary">
+            <div className="stat-figure text-base-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -51,7 +51,9 @@ const TickerStockValue = () => {
               </svg>
             </div>
 
-            <div className="stat-value">${mostRecentStockValue.toFixed(3)}</div>
+            <div className="stat-value text-success ">
+              ${mostRecentStockValue.toFixed(3)}
+            </div>
             <div className="stat-desc">
               Previous value : ${values?.[1].value.toFixed(3) ?? 0}
             </div>
