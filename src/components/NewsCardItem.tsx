@@ -10,7 +10,8 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
   const [isImage, setIsImage] = useState(false);
   const [isVisible, domRef] = useIntersectionObserver();
   const img = useMemo(() => new Image(), []);
-  const placeholderImage = "https://placehold.co/384x192?text=Image+not+found";
+  const placeholderImage =
+    "https://placehold.co/384x192?text=Image+not+found+or+too+large";
 
   useEffect(() => {
     const timer = setTimeout(() => {

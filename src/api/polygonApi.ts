@@ -66,7 +66,7 @@ export async function getSma(
   stockTicker: string,
   otherParams?: Partial<GetSmaParams>
 ) {
-  const url = `${BASE_URL}v1/indicators/sma/${stockTicker}?timespan=week&adjusted=true&window=50&series_type=close&order=desc`;
+  const url = `${BASE_URL}v1/indicators/sma/${stockTicker}?timespan=day&adjusted=true&window=50&series_type=close&order=desc`;
 
   try {
     const response = await axios.get<SmaResponse>(url, {
