@@ -36,7 +36,10 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
   }, [result.image_url, img]);
 
   return (
-    <div className="card card-compact w-96 bg-base-100 shadow-xl" ref={domRef}>
+    <div
+      className="card card-compact w-96 bg-base-100 shadow-xl border"
+      ref={domRef}
+    >
       <figure>
         {isLoading ? (
           <div className="flex flex-col gap-4 w-full">
