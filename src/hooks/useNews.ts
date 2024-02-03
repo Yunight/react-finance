@@ -20,7 +20,11 @@ export const useNews = () => {
         .then((res) => {
           const currentTime = new Date();
           const storedTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
-          localStorage.setItem("newsData", JSON.stringify({ storedTime, res }));
+          const newsResponse = res.results;
+          localStorage.setItem(
+            "newsData",
+            JSON.stringify({ storedTime, newsResponse })
+          );
           dispatch(getNewsDataSuccess(res.results));
         })
         .catch((error) => dispatch(getNewsDataFailure(error.message)));
@@ -29,16 +33,17 @@ export const useNews = () => {
     const storedData = localStorage.getItem("newsData");
 
     if (storedData) {
-      const { storedTime: storedMin, res: NewsData } = JSON.parse(storedData);
+      const { storedTime: storedMin, newsResponse: storedDatas } =
+        JSON.parse(storedData);
       const minutes = timeHoursAndMinuteToMinutes(storedMin);
       const currentTime = new Date();
       const currentStoredTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
       const localStoredTime = timeHoursAndMinuteToMinutes(currentStoredTime);
 
-      if (localStoredTime - minutes > MIN_BEFORE_FETCHING_NEWS) {
+      if (localStoredTime - minutes >= MIN_BEFORE_FETCHING_NEWS) {
         fetchData();
       } else {
-        dispatch(getNewsDataSuccess(NewsData.results));
+        dispatch(getNewsDataSuccess(storedDatas));
       }
     } else {
       fetchData();

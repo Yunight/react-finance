@@ -3,7 +3,7 @@ import NewsCardItem from "./NewsCardItem";
 import { TickerNewsResultItem } from "@/types/types";
 import ContentTitleDisplay from "./ContentTitleDisplay";
 import { usePagination } from "@/hooks/usePagination";
-import Pagination from "./Pagination"; // import the Pagination component
+import Pagination from "./Pagination";
 import { ARTICLES_PER_PAGE } from "@/consts/consts";
 
 const NewsCardDisplay = () => {

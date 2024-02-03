@@ -1,7 +1,7 @@
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { dateConvert } from "@/lib/utils";
 import { TickerNewsResultItem } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 interface NewsCardItemProps {
   result: TickerNewsResultItem;
 }
@@ -10,9 +10,9 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isImage, setIsImage] = useState(false);
   const [isVisible, domRef] = useIntersectionObserver();
+  const img = useMemo(() => new Image(), []);
 
   useEffect(() => {
-    const img = new Image();
     img.src = result.image_url;
 
     img.onload = () => {
@@ -24,7 +24,7 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
       setIsLoading(false);
       setIsImage(false);
     };
-  }, [result.image_url]);
+  }, [result.image_url, img]);
 
   return (
     <div className="card card-compact w-96 bg-base-100 shadow-xl" ref={domRef}>
@@ -64,6 +64,7 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
           <button
             className="btn btn-info text-base-100"
             onClick={() => window.open(result.article_url, "_blank")}
+            rel="noopener noreferrer"
           >
             Read more
           </button>
