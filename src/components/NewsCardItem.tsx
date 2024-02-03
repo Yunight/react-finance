@@ -70,18 +70,19 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
             href={result.article_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-info btn-outline"
+            className="btn  btn-outline"
           >
             Read more
           </a>
         </div>
       </div>
       <div className="flex flex-wrap space-x-4 text-xs text-muted-foreground p-4">
-        {result.tickers.map((ticker, index) => (
+        {result.tickers.slice(0, 5).map((ticker, index) => (
           <div className="p-1" key={index}>
             #{ticker}
           </div>
         ))}
+        {result.tickers.length > 5 && <div className="p-1">...</div>}
       </div>
     </div>
   );
