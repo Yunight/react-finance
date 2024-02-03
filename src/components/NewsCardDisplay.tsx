@@ -1,6 +1,6 @@
 import { useNews } from "@/hooks/useNews";
 import NewsCardItem from "./NewsCardItem";
-import { TickerNewsResult } from "@/types/types";
+import { TickerNewsResultItem } from "@/types/types";
 import ContentTitleDisplay from "./ContentTitleDisplay";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "./Pagination"; // import the Pagination component
@@ -39,7 +39,7 @@ const NewsCardDisplay = () => {
             <div className="skeleton h-32 w-full"></div>
           </div>
         ) : (
-          currentItems?.map((result: TickerNewsResult) => (
+          currentItems?.map((result: TickerNewsResultItem) => (
             <NewsCardItem key={result.id} result={result} />
           ))
         )}

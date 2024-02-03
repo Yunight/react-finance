@@ -6,19 +6,43 @@ import {
   getNewsDataSuccess,
 } from "@/redux/tickerSlice";
 import { getTickerNews } from "@/api/polygonApi";
+import { timeHoursAndMinuteToMinutes } from "@/lib/utils";
+import { MIN_BEFORE_FETCHING_NEWS } from "@/consts/consts";
 
 export const useNews = () => {
   const dispatch = useAppDispatch();
-  const results = useAppSelector((state) => state.ticker.newsResponse?.results);
+  const results = useAppSelector((state) => state.ticker.newsResponse);
 
   useEffect(() => {
-    dispatch(getNewsDataStart());
-    getTickerNews()
-      .then((news) => {
-        localStorage.setItem("newsData", JSON.stringify(news));
-        dispatch(getNewsDataSuccess(news));
-      })
-      .catch((error) => dispatch(getNewsDataFailure(error.message)));
+    const fetchData = () => {
+      dispatch(getNewsDataStart());
+      getTickerNews()
+        .then((res) => {
+          const currentTime = new Date();
+          const storedTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
+          localStorage.setItem("newsData", JSON.stringify({ storedTime, res }));
+          dispatch(getNewsDataSuccess(res.results));
+        })
+        .catch((error) => dispatch(getNewsDataFailure(error.message)));
+    };
+
+    const storedData = localStorage.getItem("newsData");
+
+    if (storedData) {
+      const { storedTime: storedMin, res: NewsData } = JSON.parse(storedData);
+      const minutes = timeHoursAndMinuteToMinutes(storedMin);
+      const currentTime = new Date();
+      const currentStoredTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
+      const localStoredTime = timeHoursAndMinuteToMinutes(currentStoredTime);
+
+      if (localStoredTime - minutes > MIN_BEFORE_FETCHING_NEWS) {
+        fetchData();
+      } else {
+        dispatch(getNewsDataSuccess(NewsData.results));
+      }
+    } else {
+      fetchData();
+    }
   }, [dispatch]);
 
   return results;

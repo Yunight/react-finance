@@ -156,7 +156,7 @@ export interface TickerNewsResponse {
   count: number;
   next_url: string;
   request_id: string;
-  results: TickerNewsResult[];
+  results: TickerNewsResultItem[];
   status: string;
 }
 
@@ -167,7 +167,7 @@ export interface Publisher {
   name: string;
 }
 
-export interface TickerNewsResult {
+export interface TickerNewsResultItem {
   amp_url: string;
   article_url: string;
   author: string;

@@ -24,3 +24,8 @@ export const getCurrentTimePlusXMins = (): string => {
   const seconds = ("0" + date.getSeconds()).slice(-2);
   return `${hours}:${minutes}:${seconds}`;
 };
+
+export const timeHoursAndMinuteToMinutes = (hoursAndMineTime: string) => {
+  const [hours, minutes] = hoursAndMineTime.split(":").map(Number);
+  return hours * 60 + minutes;
+};

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   AllTickerDetails,
   SmaResponse,
-  TickerNewsResponse,
+  TickerNewsResultItem,
 } from "../types/types";
 import { ResultItem } from "../types/types";
 
@@ -14,7 +14,7 @@ interface TickerState {
   sma: SmaResponse | null;
   dailyTickers: ResultItem[];
   dailyTickersFilter: string;
-  newsResponse: TickerNewsResponse | null;
+  newsResponse: TickerNewsResultItem[] | null;
   searchInput: string;
   nextStockValueUpdate: string;
 }
@@ -99,7 +99,10 @@ const tickerSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    getNewsDataSuccess: (state, action: PayloadAction<TickerNewsResponse>) => {
+    getNewsDataSuccess: (
+      state,
+      action: PayloadAction<TickerNewsResultItem[]>
+    ) => {
       state.newsResponse = action.payload;
       state.loading = false;
     },

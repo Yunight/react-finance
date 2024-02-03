@@ -1,13 +1,15 @@
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { dateConvert } from "@/lib/utils";
-import { TickerNewsResult } from "@/types/types";
+import { TickerNewsResultItem } from "@/types/types";
 import { useEffect, useState } from "react";
 interface NewsCardItemProps {
-  result: TickerNewsResult;
+  result: TickerNewsResultItem;
 }
 
 const NewsCardItem = ({ result }: NewsCardItemProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isImage, setIsImage] = useState(false);
+  const [isVisible, domRef] = useIntersectionObserver();
 
   useEffect(() => {
     const img = new Image();
@@ -25,13 +27,13 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
   }, [result.image_url]);
 
   return (
-    <div className="card card-compact w-96 bg-base-100 shadow-xl">
+    <div className="card card-compact w-96 bg-base-100 shadow-xl" ref={domRef}>
       <figure>
         {isLoading ? (
           <div className="flex flex-col gap-4 w-full">
             <div className="skeleton w-full h-48"></div>
           </div>
-        ) : (
+        ) : isVisible ? (
           <img
             src={
               isImage
@@ -41,7 +43,7 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
             alt={result.title}
             className="w-full h-48 "
           />
-        )}
+        ) : null}
       </figure>
       <div className="card-body">
         <h2 className="card-title">
