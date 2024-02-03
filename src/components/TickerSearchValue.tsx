@@ -8,6 +8,7 @@ import {
 } from "./ui/card";
 import { Separator } from "@/components/ui/separator";
 import { dateConvert } from "@/lib/utils";
+import { FcAlarmClock } from "react-icons/fc";
 
 const TickerStockValue = () => {
   const values = useAppSelector((state) => state.ticker.sma?.results.values);
@@ -71,14 +72,16 @@ const TickerStockValue = () => {
 
       <Card className="w-1/2 mb-4">
         <CardHeader>
-          <CardTitle>Next Update at :</CardTitle>
+          <CardTitle> Next Update at :</CardTitle>
           <Separator />
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <div className="stat">
-            <div className="stat-value">{nextUpdateTime}</div>
+            <div className="stat-value flex align-middle items-center gap-3">
+              <FcAlarmClock size={30} />
+              {nextUpdateTime}
+            </div>
           </div>
-
           <div className="text-xl font-bold"></div>
           <div className="text-sm text-muted-foreground pt-4"></div>
         </CardContent>

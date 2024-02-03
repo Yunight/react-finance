@@ -2,6 +2,21 @@ import { useAppSelector } from "@/redux/store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { dateConvert } from "@/lib/utils";
+import { ThComponent } from "./ThComponent";
+import {
+  FcCalendar,
+  FcCurrencyExchange,
+  FcApproval,
+  FcBusiness,
+  FcContacts,
+  FcDepartment,
+  FcInfo,
+  FcKey,
+} from "react-icons/fc";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import { MdCurrencyExchange } from "react-icons/md";
+import { AiTwotoneTool } from "react-icons/ai";
+import { TbExchange } from "react-icons/tb";
 
 const TickerDetails = () => {
   const selectedTickerData = useAppSelector(
@@ -12,6 +27,21 @@ const TickerDetails = () => {
   if (!selectedTickerData || isLoading) {
     return null;
   }
+
+  const icons = [
+    <FcDepartment />,
+    <FcContacts />,
+    <FcBusiness />,
+    <FcCurrencyExchange />,
+    <FaArrowRightArrowLeft />,
+    <FcInfo />,
+    <FcApproval />,
+    <MdCurrencyExchange />,
+    <FcKey />,
+    <AiTwotoneTool />,
+    <TbExchange />,
+    <FcCalendar />,
+  ];
 
   return (
     <div className="w-1/2 mt-5">
@@ -32,10 +62,10 @@ const TickerDetails = () => {
             <tbody>
               {Object.keys(selectedTickerData).map((key, index) => (
                 <tr key={index}>
-                  <th>
+                  <ThComponent icon={icons[index % icons.length]}>
                     {key.charAt(0).toUpperCase() +
                       key.slice(1).replace(/_/g, " ")}
-                  </th>
+                  </ThComponent>
                   <td>
                     {key === "last_updated_utc"
                       ? dateConvert(

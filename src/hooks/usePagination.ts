@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/redux/store";
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
   if (!Array.isArray(items)) {
@@ -7,30 +7,16 @@ export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
   }
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  const [isPending, startTransition] = useTransition();
   const dailyTickersFilter = useAppSelector(
     (state) => state.ticker.dailyTickersFilter
   );
 
-  const handleNextTransition = () => {
-    startTransition(() => {
-      handleNext();
-    });
-  };
-
-  const handlePreviousTransition = () => {
-    startTransition(() => {
-      handlePrevious();
-    });
-  };
-
   const handleNext = () => {
-    setCurrentPage(currentPage + 1);
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   const handlePrevious = () => {
-    setCurrentPage(currentPage - 1);
+    setCurrentPage((prevPage) => prevPage - 1);
   };
 
   const currentItems = useMemo(() => {
@@ -48,9 +34,8 @@ export const usePagination = <T>(itemsPerPage: number, items: T[]) => {
   }, [dailyTickersFilter]);
 
   return {
-    handleNext: handleNextTransition,
-    handlePrevious: handlePreviousTransition,
-    isPending,
+    handleNext,
+    handlePrevious,
     currentItems,
     currentPage,
     totalPages,

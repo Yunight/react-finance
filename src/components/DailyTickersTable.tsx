@@ -1,6 +1,17 @@
 import { ResultItem } from "@/types/types";
-
 import { dateConvert } from "@/lib/utils";
+import {
+  FcBearish,
+  FcBullish,
+  FcOvertime,
+  FcTodoList,
+  FcAdvance,
+  FcDonate,
+  FcCalendar,
+  FcBarChart,
+  FcCurrencyExchange,
+} from "react-icons/fc";
+import { ThComponent } from "./ThComponent";
 
 interface DailyTickersTableProps {
   item: ResultItem;
@@ -18,47 +29,53 @@ const DailyTickersTable = ({ item }: DailyTickersTableProps) => {
         </thead>
         <tbody>
           <tr>
-            <th>Close Price</th>
+            <ThComponent icon={<FcOvertime />}>Close Price</ThComponent>
             <td>{item.c}</td>
           </tr>
 
           <tr>
-            <th>Highest Price</th>
+            <ThComponent icon={<FcBullish />}>Highest Price</ThComponent>
             <td>{item.h}</td>
           </tr>
 
           <tr>
-            <th>Lowest Price</th>
+            <ThComponent icon={<FcBearish />}>Lowest Price</ThComponent>
             <td>{item.l}</td>
           </tr>
 
           <tr>
-            <th>Number of Transactions</th>
+            <ThComponent icon={<FcTodoList />}>
+              Number of Transactions
+            </ThComponent>
             <td>{item.n}</td>
           </tr>
 
           <tr>
-            <th>Open Price</th>
+            <ThComponent icon={<FcAdvance />}>Open Price</ThComponent>
             <td>{item.o}</td>
           </tr>
 
           <tr>
-            <th>OTC Ticker</th>
+            <ThComponent icon={<FcDonate />}>OTC Ticker</ThComponent>
             <td>{item.otc ? "Yes" : "No"}</td>
           </tr>
 
           <tr>
-            <th>End of Aggregate Window</th>
+            <ThComponent icon={<FcCalendar />}>
+              End of Aggregate Window
+            </ThComponent>
             <td>{dateConvert(item.t)}</td>
           </tr>
 
           <tr>
-            <th>Trading Volume</th>
+            <ThComponent icon={<FcBarChart />}>Trading Volume</ThComponent>
             <td>{item.v}</td>
           </tr>
 
           <tr>
-            <th>Volume Weighted Average Price</th>
+            <ThComponent icon={<FcCurrencyExchange />}>
+              Volume Weighted Average Price
+            </ThComponent>
             <td>{item.vw}</td>
           </tr>
         </tbody>

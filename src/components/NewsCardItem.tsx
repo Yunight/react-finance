@@ -5,25 +5,34 @@ import { useEffect, useMemo, useState } from "react";
 interface NewsCardItemProps {
   result: TickerNewsResultItem;
 }
-
 const NewsCardItem = ({ result }: NewsCardItemProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isImage, setIsImage] = useState(false);
   const [isVisible, domRef] = useIntersectionObserver();
   const img = useMemo(() => new Image(), []);
+  const placeholderImage = "https://placehold.co/384x192?text=Image+not+found";
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setIsImage(false);
+    }, 2000);
+
     img.src = result.image_url;
 
     img.onload = () => {
+      clearTimeout(timer);
       setIsLoading(false);
       setIsImage(true);
     };
 
     img.onerror = () => {
+      clearTimeout(timer);
       setIsLoading(false);
       setIsImage(false);
     };
+
+    return () => clearTimeout(timer);
   }, [result.image_url, img]);
 
   return (
@@ -35,11 +44,7 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
           </div>
         ) : isVisible ? (
           <img
-            src={
-              isImage
-                ? result.image_url
-                : "https://placehold.co/384x192?text=Image+not+found"
-            }
+            src={isImage ? result.image_url : placeholderImage}
             alt={result.title}
             className="w-full h-48 "
           />
@@ -61,13 +66,14 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
             : result.description}
         </p>
         <div className="card-actions justify-end">
-          <button
-            className="btn btn-info text-base-100"
-            onClick={() => window.open(result.article_url, "_blank")}
+          <a
+            href={result.article_url}
+            target="_blank"
             rel="noopener noreferrer"
+            className="btn btn-info btn-outline"
           >
             Read more
-          </button>
+          </a>
         </div>
       </div>
       <div className="flex flex-wrap space-x-4 text-xs text-muted-foreground p-4">
