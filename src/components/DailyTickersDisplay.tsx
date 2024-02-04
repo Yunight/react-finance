@@ -26,6 +26,10 @@ const DailyTickersDisplay = () => {
   useStoredDailyNews(fetchAndStoreData);
 
   const filteredItems = useMemo(() => {
+    if (!dailyNews) {
+      return [];
+    }
+
     return dailyNews.filter((item) =>
       item.T.toLowerCase().includes(filter.toLowerCase())
     );
