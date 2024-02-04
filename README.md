@@ -54,7 +54,7 @@ The application consists of three main pages and one feature:
 ### News
 
 - Fetches all news related to tickers from the API.
-- Done everytime we open if the last time we checked is more than used set timer (default 5 mins) only if less we just display the stored news
+- We only fetch the news if it's has been at least more than 5mins, else we keep the same news, to avoid call everytime we come to the page which is not necessary
 - Stores datas in the Redux store.
 
 ### Theme Manager
