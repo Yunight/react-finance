@@ -42,6 +42,7 @@ const DailyTickersDisplay = () => {
           <input
             type="text"
             placeholder="Filter here"
+            value={filter}
             onChange={handleFilterChange}
             className="input input-bordered w-full max-w-xs font-semibold placeholder:italic"
           />
@@ -66,9 +67,6 @@ const DailyTickersDisplay = () => {
 
             <div className="stat-title">Total Results</div>
             <div className="stat-value">{filteredItems.length}</div>
-            <div className="stat-desc">
-              {filteredItems.length > 9000 ? "It's over 9000 !" : null}
-            </div>
           </div>
         </div>
         <Pagination

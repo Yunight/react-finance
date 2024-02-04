@@ -77,7 +77,7 @@ const Header = (): JSX.Element => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="toast toast-top toast-center">
+          <div className="toast toast-top toast-center z-50">
             <div className="alert alert-error">
               <span>{errorMessage} </span>
             </div>

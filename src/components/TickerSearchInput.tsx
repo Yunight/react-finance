@@ -1,7 +1,7 @@
 // AutoCompleteSearch.tsx
 import { Transition } from "@headlessui/react";
 
-import { useAutoCompleteSearch } from "@/hooks/useTickersSearchInput";
+import { useTickersSearchInput } from "@/hooks/useTickersSearchInput";
 import ContentTitleDisplay from "./ContentTitleDisplay";
 
 const TickerSearchInput = () => {
@@ -11,7 +11,7 @@ const TickerSearchInput = () => {
     handleInputChange,
     filteredSuggestions,
     handleSuggestionClick,
-  } = useAutoCompleteSearch();
+  } = useTickersSearchInput();
 
   return (
     <Transition

@@ -10,14 +10,18 @@ import {
   FcCalendar,
   FcBarChart,
   FcCurrencyExchange,
+  FcLineChart,
 } from "react-icons/fc";
 import { ThComponent } from "./ThComponent";
+import { useDailyTickers } from "@/hooks/useDailyTickers";
 
 interface DailyTickersTableProps {
   item: ResultItem;
 }
 
 const DailyTickersTable = ({ item }: DailyTickersTableProps) => {
+  const { handleButtonClick } = useDailyTickers();
+
   return (
     <div className="overflow-x-auto">
       <table className="table table-zebra">
@@ -79,6 +83,18 @@ const DailyTickersTable = ({ item }: DailyTickersTableProps) => {
             <td>{item.vw}</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td className="text-center" colSpan={2}>
+              <button
+                className="btn btn-outline btn-block"
+                onClick={() => handleButtonClick(item.T)}
+              >
+                <FcLineChart size={30} /> Click here for details
+              </button>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

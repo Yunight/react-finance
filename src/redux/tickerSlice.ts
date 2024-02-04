@@ -51,6 +51,10 @@ const tickerSlice = createSlice({
     setSearchInput: (state, action: PayloadAction<string>) => {
       state.searchInput = action.payload;
     },
+
+    resetSearchInput: (state) => {
+      state.searchInput = "";
+    },
     selectedTicker: (state, action: PayloadAction<AllTickerDetails>) => {
       state.selectedTicker = action.payload;
     },
@@ -119,6 +123,10 @@ const tickerSlice = createSlice({
     resetNextStockValueUpdate: (state) => {
       state.nextStockValueUpdate = initialState.nextStockValueUpdate;
     },
+    apiFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -127,6 +135,7 @@ export const {
   fetchDataSuccess,
   fetchDataFailure,
   setSearchInput,
+  resetSearchInput,
   selectedTicker,
   resetSelectedTicker,
   getSmaStart,
@@ -144,6 +153,7 @@ export const {
   resetError,
   setNextStockValueUpdate,
   resetNextStockValueUpdate,
+  apiFailure,
 } = tickerSlice.actions;
 
 export default tickerSlice.reducer;

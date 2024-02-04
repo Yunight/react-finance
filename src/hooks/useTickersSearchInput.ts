@@ -18,7 +18,7 @@ import { getTickers, getSma } from "@/api/polygonApi";
 import { AllTickerDetails } from "@/types/types";
 import { getCurrentTimePlusXMins } from "@/lib/utils";
 
-export const useAutoCompleteSearch = () => {
+export const useTickersSearchInput = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const input = useAppSelector((state) => state.ticker.searchInput);
   const tickerData = useAppSelector((state) => state.ticker.data);
@@ -86,7 +86,9 @@ export const useAutoCompleteSearch = () => {
   const handleSuggestionClick = useCallback(
     (suggestion: AllTickerDetails) => {
       setShowSuggestions(false);
+
       dispatch(selectedTicker(suggestion));
+
       dispatch(setSearchInput(suggestion.name));
       dispatch(getSmaStart());
 
@@ -105,5 +107,6 @@ export const useAutoCompleteSearch = () => {
     handleInputChange,
     filteredSuggestions,
     handleSuggestionClick,
+    fetchData,
   };
 };

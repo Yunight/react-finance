@@ -11,6 +11,8 @@ import {
 } from "@/types/types";
 
 import axios, { CancelToken } from "axios";
+import store from "../redux/store";
+import { apiFailure } from "../redux/tickerSlice";
 
 const BASE_URL = "https://api.polygon.io/";
 const apiKey = import.meta.env.VITE_APP_SECRET;
@@ -36,7 +38,7 @@ const apiKey = import.meta.env.VITE_APP_SECRET;
 
 export async function getTickers(
   search: string,
-  cancelToken: CancelToken,
+  cancelToken?: CancelToken,
   params?: AllTickerDetails
 ): Promise<AllTickersResponse> {
   const url = `${BASE_URL}v3/reference/tickers`;
@@ -54,11 +56,14 @@ export async function getTickers(
 
     return response.data;
   } catch (error) {
+    let errorMessage;
     if (error instanceof Error) {
-      throw new Error(`API request failed with status ${error.message}`);
+      errorMessage = `API request failed with status ${error.message}`;
     } else {
-      throw new Error(`API request failed with status ${error}`);
+      errorMessage = `API request failed with status ${error}`;
     }
+    store.dispatch(apiFailure(errorMessage));
+    throw new Error(errorMessage);
   }
 }
 
