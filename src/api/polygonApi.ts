@@ -83,11 +83,14 @@ export async function getSma(
 
     return response.data;
   } catch (error) {
+    let errorMessage;
     if (error instanceof Error) {
-      throw new Error(`API request failed with status ${error.message}`);
+      errorMessage = `API request failed with status ${error.message}`;
     } else {
-      throw new Error(`API request failed with status ${error}`);
+      errorMessage = `API request failed with status ${error}`;
     }
+    store.dispatch(apiFailure(errorMessage));
+    throw new Error(errorMessage);
   }
 }
 
@@ -108,11 +111,14 @@ export async function getGroupedDaily(
 
     return response.data;
   } catch (error) {
+    let errorMessage;
     if (error instanceof Error) {
-      throw new Error(`API request failed with status ${error.message}`);
+      errorMessage = `API request failed with status ${error.message}`;
     } else {
-      throw new Error(`API request failed with status ${error}`);
+      errorMessage = `API request failed with status ${error}`;
     }
+    store.dispatch(apiFailure(errorMessage));
+    throw new Error(errorMessage);
   }
 }
 
@@ -133,10 +139,13 @@ export async function getTickerNews(
 
     return response.data;
   } catch (error) {
+    let errorMessage;
     if (error instanceof Error) {
-      throw new Error(`API request failed with status ${error.message}`);
+      errorMessage = `API request failed with status ${error.message}`;
     } else {
-      throw new Error(`API request failed with status ${error}`);
+      errorMessage = `API request failed with status ${error}`;
     }
+    store.dispatch(apiFailure(errorMessage));
+    throw new Error(errorMessage);
   }
 }
