@@ -1,7 +1,15 @@
 
+
 # Technical Challenge: React Finance Dashboard
 
 This project is built using React, Vite, TypeScript, Redux, Recharts & DaisyUI. 
+
+> Constraints :
+>  1. It must have a search bar which show a list of values as we type for autocompletion suggestion
+>  2. Once a suggestion is selected, we have to display additionnal informations about the ticker, display the Simple Moving
+> Average (SMA) with a graph for better visualization and other components
+>  3. It must display the latest value of stock of that selected ticker, and the value must be updated automatically
+>  4. The design must be easy to read and user friendly
 
 ## Getting Started
 
@@ -32,6 +40,7 @@ The application consists of three main pages and one feature:
 - Retrieves all ticker data from the previous day, as the current day's data is unavailable with the free plan.
 - Allows filtering and navigation.
 - Datas are stored in both local storage and Redux to minimize redundant API calls and kept after refreshing the page, as the data remains unchanged until the next day.
+- on click on the button "Click here for details" we'll navigate to the page /search and load details for this particular ticker
 
 ### Search
 
@@ -39,13 +48,13 @@ The application consists of three main pages and one feature:
 - Suggestions are stored in Redux.
 - A new API call is made if the input changes after 500ms to avoid many calls at each input change, with the results stored in Redux.
 - Upon selection, the application makes another API call to fetch the Simple Moving Average (SMA) and displays the graph if values exist.
-- Displays the latest stock value and updates it at a user-configured interval.
+- Displays the latest stock value and updates it at a user-configured interval. ( default 1min)
 - You can change page and the value will be kept however since we clear the interval everytime to avoid any side effect in useEffect, next update timing is also updated to have the correct value
 
 ### News
 
 - Fetches all news related to tickers from the API.
-- Done everytime we open the page to ensures that the datas are the newest.
+- We only fetch the news if it's has been at least more than 5mins, else we keep the same news, to avoid call everytime we come to the page which is not necessary
 - Stores datas in the Redux store.
 
 ### Theme Manager
@@ -57,10 +66,11 @@ The application consists of three main pages and one feature:
 A constants file contains all the constant values for the application:
 
 ```arduino
-export const BASE_TIMER = 1; 
-export const NUMBER_OF_DAILY_PER_PAGE = 18; 
-export const NUMBER_OF_NEWS = 18; 
-export const ARTICLES_PER_PAGE = 6;
+export  const  BASE_TIMER  =  1;
+export  const  NUMBER_OF_DAILY_PER_PAGE  =  18;
+export  const  NUMBER_OF_NEWS  =  30;
+export  const  ARTICLES_PER_PAGE  =  6;
+export  const  MIN_BEFORE_FETCHING_NEWS  =  5;
 ```
 
 ## Errors handling
@@ -78,6 +88,7 @@ export const ARTICLES_PER_PAGE = 6;
   - `components`
     - `ui`
       - `card.tsx`
+      - `separator.tsx`
     - `separator.tsx`
     - `ContentTitleDisplay.tsx`
     - `DailyTickersDisplay.tsx`
@@ -87,6 +98,7 @@ export const ARTICLES_PER_PAGE = 6;
     - `NewsCardItem.tsx`
     - `Pages.tsx`
     - `Pagination.tsx`
+    - `thComponent.tsx`
     - `ThemeSelector.tsx`
     - `TickerSearchChart.tsx`
     - `TickerSearchDetails.tsx`
@@ -97,14 +109,16 @@ export const ARTICLES_PER_PAGE = 6;
   - `hooks`
     - `useDailyTickers.ts`
     - `useFetchDailyData.ts`
+    -  `useIntersectionObserver.ts`
     - `useNews.ts`
     - `usePagination.ts`
+    - `useStoreDailyNews.ts` 
     - `useTickersSearchInput.ts`
   - `lib`
     - `utils.ts`
   - `redux`
     - `store.ts`
     - `tickerSlice.ts`
-  - `types`
-    - `types.ts`
+  - `interfaces`
+    - `interfaces.ts`
 ---
