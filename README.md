@@ -6,8 +6,8 @@ This project is built using React, Vite, TypeScript, Redux, Recharts & DaisyUI.
 
 > Constraints :
 >  1. It must have a search bar which show a list of values as we type for autocompletion suggestion
->  2. Once a suggestion is selected, we have to display additionnal informations about the ticker, and display also the Simple Moving
-> Average (SMA) with a graph for better visualization + other components
+>  2. Once a suggestion is selected, we have to display additionnal informations about the ticker, display the Simple Moving
+> Average (SMA) with a graph for better visualization and other components
 >  3. It must display the latest value of stock of that selected ticker, and the value must be updated automatically
 >  4. The design must be easy to read and user friendly
 
