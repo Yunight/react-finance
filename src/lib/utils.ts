@@ -29,3 +29,7 @@ export const timeHoursAndMinuteToMinutes = (hoursAndMineTime: string) => {
   const [hours, minutes] = hoursAndMineTime.split(":").map(Number);
   return hours * 60 + minutes;
 };
+
+export const classNames = (...classes: string[]) => {
+  return classes.filter(Boolean).join(" ");
+};

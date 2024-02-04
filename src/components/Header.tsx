@@ -1,12 +1,13 @@
-import { Disclosure, Transition } from "@headlessui/react";
+import { Transition } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/bourse.png";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { resetError } from "@/redux/tickerSlice";
 import { JSX } from "react/jsx-runtime";
 import ThemeSelector from "./ThemeSelector";
+import { classNames } from "@/lib/utils";
 
 const navigation = [
   { name: "Daily", path: "/", current: false, title: "Daily" },
@@ -17,10 +18,6 @@ const navigation = [
 const Header = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const errorMessage = useAppSelector((state) => state.ticker.error);
-
-  const classNames = useCallback((...classes: string[]) => {
-    return classes.filter(Boolean).join(" ");
-  }, []);
 
   useEffect(() => {
     if (errorMessage) {
@@ -33,40 +30,33 @@ const Header = (): JSX.Element => {
 
   return (
     <div className="min-h-full">
-      <Disclosure
-        as="nav"
-        className="flex bg-base-200 justify-around px-8 py-2"
-      >
+      <nav className="flex bg-base-200 justify-around px-8 py-2">
         <div className="flex items-center">
-          <div className="flex ">
-            <div className="">
-              <img className="h-8 w-8 " src={logo} alt="React Finance" />
-            </div>
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navigation.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.path}
-                  className={({ isActive }) =>
-                    classNames(
-                      isActive
-                        ? "border border-base-content transition-all duration-500 ease-in-out scale-125 "
-                        : " hover:bg-neutral text-base-content dark:text-neutral-content hover:text-neutral-100 transition-all duration-500 ease-in-out",
-                      "rounded-lg px-3 py-2 text-sm font-medium"
-                    )
-                  }
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </NavLink>
-              ))}
-            </div>
+          <img className="h-8 w-8 " src={logo} alt="React Finance" />
+          <div className="ml-10 flex items-baseline space-x-4">
+            {navigation.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) =>
+                  classNames(
+                    isActive
+                      ? "border border-base-content transition-all duration-500 ease-in-out scale-125 "
+                      : " hover:bg-neutral text-base-content dark:text-neutral-content hover:text-neutral-100 transition-all duration-500 ease-in-out",
+                    "rounded-lg px-3 py-2 text-sm font-medium"
+                  )
+                }
+                aria-current={item.current ? "page" : undefined}
+              >
+                {item.name}
+              </NavLink>
+            ))}
           </div>
         </div>
         <div>
           <ThemeSelector />
         </div>
-      </Disclosure>
+      </nav>
       <div className="pt-4">
         <Transition
           show={!!errorMessage}

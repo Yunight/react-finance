@@ -30,12 +30,4 @@ const News = () => (
   </main>
 );
 
-const Reports = () => (
-  <main>
-    <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-      Reports Content
-    </div>
-  </main>
-);
-
-export { Daily, Search, News, Reports };
+export { Daily, Search, News };
