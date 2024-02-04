@@ -1,4 +1,4 @@
-import { ResultItem } from "@/types/types";
+import { ResultItem } from "@/interfaces/interfaces";
 import { dateConvert } from "@/lib/utils";
 import {
   FcBearish,

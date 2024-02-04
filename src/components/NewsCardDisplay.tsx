@@ -1,6 +1,6 @@
 import { useNews } from "@/hooks/useNews";
 import NewsCardItem from "./NewsCardItem";
-import { TickerNewsResultItem } from "@/types/types";
+import { TickerNewsResultItem } from "@/interfaces/interfaces";
 import ContentTitleDisplay from "./ContentTitleDisplay";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "./Pagination"; // import the Pagination component

@@ -15,7 +15,7 @@ import {
   setNextStockValueUpdate,
 } from "@/redux/tickerSlice";
 import { getTickers, getSma } from "@/api/polygonApi";
-import { AllTickerDetails } from "@/types/types";
+import { AllTickerDetails } from "@/interfaces/interfaces";
 import { getCurrentTimePlusXMins } from "@/lib/utils";
 
 export const useTickersSearchInput = () => {

@@ -3,8 +3,8 @@ import {
   AllTickerDetails,
   SmaResponse,
   TickerNewsResultItem,
-} from "../types/types";
-import { ResultItem } from "../types/types";
+} from "../interfaces/interfaces";
+import { ResultItem } from "../interfaces/interfaces";
 
 interface TickerState {
   data: AllTickerDetails[];

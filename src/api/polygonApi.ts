@@ -8,7 +8,7 @@ import {
   SmaResponse,
   TickerNewsParams,
   TickerNewsResponse,
-} from "@/types/types";
+} from "@/interfaces/interfaces";
 
 import axios, { CancelToken } from "axios";
 import store from "../redux/store";

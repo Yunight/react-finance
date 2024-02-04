@@ -1,6 +1,6 @@
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import { dateConvert } from "@/lib/utils";
-import { TickerNewsResultItem } from "@/types/types";
+import { TickerNewsResultItem } from "@/interfaces/interfaces";
 import { useEffect, useMemo, useState } from "react";
 interface NewsCardItemProps {
   result: TickerNewsResultItem;
