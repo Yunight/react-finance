@@ -13,6 +13,18 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
   const placeholderImage =
     "https://placehold.co/384x192?text=Image+not+found+or+too+large";
 
+  const truncatedTitle = useMemo(() => {
+    return result.title && result.title.length > 50
+      ? `${result.title.substring(0, 50)}...`
+      : result.title;
+  }, [result.title]);
+
+  const truncatedDescription = useMemo(() => {
+    return result.description && result.description.length > 100
+      ? `${result.description.substring(0, 100)}...`
+      : result.description;
+  }, [result.description]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -55,19 +67,13 @@ const NewsCardItem = ({ result }: NewsCardItemProps) => {
         ) : null}
       </figure>
       <div className="card-body">
-        <h2 className="card-title">
-          {result.title && result.title.length > 50
-            ? `${result.title.substring(0, 50)}...`
-            : result.title}
-        </h2>
+        <h2 className="card-title">{truncatedTitle}</h2>
         <p>
           By {result.author}
           <i className="block pb-5">
             Published at {dateConvert(result.published_utc)}
           </i>
-          {result.description && result.description.length > 100
-            ? `${result.description.substring(0, 100)}...`
-            : result.description}
+          {truncatedDescription}
         </p>
         <div className="card-actions justify-end">
           <a
