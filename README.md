@@ -59,9 +59,7 @@ The application consists of three main pages and one feature:
 
 ### Theme Manager
 
-- on the top right of the screen there are 2 lists, one is for switching to a light theme and the other dark, try to play with them !
-- one toggle switch is also here, must choose one of the light theme first "light","cupecake","bumblebee","emerald" or "corporate" by default the Dark Theme "Dark" will be the default Dark Theme, you can configure inside tailwind.config.js
-## Configuration
+- on the top right of the screen there is a list of themes, play and try different colors !
 
 A constants file contains all the constant values for the application:
 
