@@ -15,7 +15,7 @@ import store from "../redux/store";
 import { apiFailure } from "../redux/tickerSlice";
 
 const BASE_URL = "https://api.polygon.io/";
-const apiKey = import.meta.env.VITE_APP_SECRET;
+const apiKey = "WV4Eua2SmUqufXFHNaP6FpA7NiFpD2JQ";
 
 // export async function getTickerDetails(
 //   params: SingleTickerDetailsParams
