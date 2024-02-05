@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getDailyNewsDataFailure,
@@ -84,29 +84,6 @@ export const useDailyTickers = () => {
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    const currentDate = new Date();
-    const yesterday = new Date(currentDate);
-    yesterday.setDate(yesterday.getDate() - 2);
-    const year = yesterday.getFullYear();
-    const month = ("0" + (yesterday.getMonth() + 1)).slice(-2);
-    const day = ("0" + yesterday.getDate()).slice(-2);
-    const formattedDate = `${year}-${month}-${day}`;
-
-    const storedData = localStorage.getItem("dailyNews");
-
-    if (storedData) {
-      const { date, results } = JSON.parse(storedData);
-      if (date === formattedDate) {
-        dispatch(getDailyNewsDataSuccess(results));
-      } else {
-        fetchAndStoreData(formattedDate);
-      }
-    } else {
-      fetchAndStoreData(formattedDate);
-    }
-  }, [dispatch, fetchAndStoreData]);
 
   return {
     fetchAndStoreData,

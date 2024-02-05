@@ -4,7 +4,9 @@ import { useAppDispatch } from "@/redux/store";
 
 type FetchAndStoreDataFunction = (date: string) => Promise<void>;
 
-const useStoredDailyNews = (fetchAndStoreData: FetchAndStoreDataFunction) => {
+const useDailyTickersStoring = (
+  fetchAndStoreData: FetchAndStoreDataFunction
+) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -31,4 +33,4 @@ const useStoredDailyNews = (fetchAndStoreData: FetchAndStoreDataFunction) => {
   }, [dispatch, fetchAndStoreData]);
 };
 
-export default useStoredDailyNews;
+export default useDailyTickersStoring;

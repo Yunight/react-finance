@@ -16,11 +16,14 @@ import Pagination from "./Pagination";
 
 import { useMemo } from "react";
 import { useAppSelector } from "@/redux/store";
+import useDailyTickersStoring from "@/hooks/useDailyTickersStoring";
 
 const DailyTickersDisplay = () => {
   const filter = useAppSelector((state) => state.ticker.dailyTickersFilter);
 
-  const { dailyNews, handleFilterChange } = useDailyTickers();
+  const { fetchAndStoreData, dailyNews, handleFilterChange } =
+    useDailyTickers();
+  useDailyTickersStoring(fetchAndStoreData);
 
   const filteredItems = useMemo(() => {
     if (!dailyNews) {
