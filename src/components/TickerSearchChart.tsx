@@ -32,27 +32,6 @@ const TickerStockChart = () => {
     (state) => state.ticker.selectedTicker
   );
 
-  useEffect(() => {
-    if (selectedTickerData) {
-      const intervalId = setInterval(() => {
-        dispatch(getSmaStart());
-        getSma(selectedTickerData.ticker)
-          .then((data) => {
-            dispatch(
-              getSmaSuccess({ results: { values: data.results.values } })
-            );
-
-            dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
-          })
-          .catch((error) => dispatch(getSmaFailure(error.message)));
-      }, BASE_TIMER * 60 * 1000);
-      return () => {
-        clearInterval(intervalId);
-        dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
-      };
-    }
-  }, [dispatch, selectedTickerData]);
-
   const minValue = useMemo(() => min(values ?? [], (d) => d.value), [values]);
   const maxValue = useMemo(() => max(values ?? [], (d) => d.value), [values]);
 
@@ -72,6 +51,27 @@ const TickerStockChart = () => {
     () => [...(values ?? [])].sort((a, b) => a.timestamp - b.timestamp),
     [values]
   );
+
+  useEffect(() => {
+    if (selectedTickerData && sortedData.length > 0) {
+      const intervalId = setInterval(() => {
+        dispatch(getSmaStart());
+        getSma(selectedTickerData.ticker)
+          .then((data) => {
+            dispatch(
+              getSmaSuccess({ results: { values: data.results.values } })
+            );
+
+            dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
+          })
+          .catch((error) => dispatch(getSmaFailure(error.message)));
+      }, BASE_TIMER * 60 * 1000);
+      return () => {
+        clearInterval(intervalId);
+        dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
+      };
+    }
+  }, [dispatch, selectedTickerData, sortedData.length]);
 
   if (isLoading || !selectedTickerData) {
     return null;
