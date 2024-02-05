@@ -1,3 +1,4 @@
+import { useEffect, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import {
   getDailyNewsDataFailure,
@@ -13,13 +14,11 @@ import {
   setSearchInput,
 } from "@/redux/tickerSlice";
 import { getGroupedDaily, getSma, getTickers } from "@/api/polygonApi";
-import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function useDailyTickers() {
+export const useDailyTickers = () => {
   const dispatch = useAppDispatch();
   const dailyNews = useAppSelector((state) => state.ticker.dailyTickers);
-
   const navigate = useNavigate();
 
   const handleButtonClick = useCallback(
@@ -86,10 +85,33 @@ export function useDailyTickers() {
     [dispatch]
   );
 
+  useEffect(() => {
+    const currentDate = new Date();
+    const yesterday = new Date(currentDate);
+    yesterday.setDate(yesterday.getDate() - 2);
+    const year = yesterday.getFullYear();
+    const month = ("0" + (yesterday.getMonth() + 1)).slice(-2);
+    const day = ("0" + yesterday.getDate()).slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+
+    const storedData = localStorage.getItem("dailyNews");
+
+    if (storedData) {
+      const { date, results } = JSON.parse(storedData);
+      if (date === formattedDate) {
+        dispatch(getDailyNewsDataSuccess(results));
+      } else {
+        fetchAndStoreData(formattedDate);
+      }
+    } else {
+      fetchAndStoreData(formattedDate);
+    }
+  }, [dispatch, fetchAndStoreData]);
+
   return {
     fetchAndStoreData,
     dailyNews,
     handleFilterChange,
     handleButtonClick,
   };
-}
+};
