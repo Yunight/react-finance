@@ -15,13 +15,15 @@ const NewsCardDisplay = () => {
   return (
     <>
       <ContentTitleDisplay text="Latest News on Tickers !" />
-      <Pagination
-        handlePrevious={handlePrevious}
-        handleNext={handleNext}
-        currentPage={currentPage}
-        totalPages={totalPages}
-        filteredItems={currentItems || []}
-      />
+      <div className="pt-5">
+        <Pagination
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          filteredItems={currentItems || []}
+        />
+      </div>
       <div className="flex justify-stretch w-screen flex-wrap max-w-7xl mx-auto gap-5 my-5">
         {currentItems?.map((result: TickerNewsResultItem) => (
           <NewsCardItem key={result.id} result={result} />
