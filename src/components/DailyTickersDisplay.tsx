@@ -13,7 +13,7 @@ import ContentTitleDisplay from "./ContentTitleDisplay";
 import { usePagination } from "@/hooks/usePagination";
 import { NUMBER_OF_DAILY_PER_PAGE } from "@/consts/consts";
 import Pagination from "./Pagination";
-import useStoredDailyNews from "@/hooks/useStoreDailyNews";
+import useStoredDailyNews from "@/hooks/useDailyTickersStoring";
 import { useMemo } from "react";
 import { useAppSelector } from "@/redux/store";
 
