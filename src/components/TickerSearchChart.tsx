@@ -73,41 +73,55 @@ const TickerStockChart = () => {
     [values]
   );
 
-  if (isLoading || !selectedTickerData || !values) {
+  if (isLoading || !selectedTickerData) {
     return null;
   }
-  return (
-    <Card className="w-full mb-4 animate-out duration-1000 mt-5">
-      <CardHeader>
-        <CardTitle>Simple Moving Average (SMA)</CardTitle>
-        <Separator />
-      </CardHeader>
-      <CardContent>
-        <AreaChart width={500} height={300} data={sortedData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="timestamp"
-            tickFormatter={(timestamp) => dateConvert(timestamp)}
-          />
-          <YAxis
-            domain={[startValue, endValue]}
-            ticks={ticks}
-            tickFormatter={(value) => `$${value}`}
-          />
-          <Tooltip
-            labelFormatter={(timestamp) => dateConvert(timestamp)}
-            formatter={(value) => [`$${value}`, "Value"]}
-          />
-          <Area
-            type="monotone"
-            dataKey="value"
-            stroke="#82ca9d"
-            fill="#82ca9d"
-          />
-        </AreaChart>
-      </CardContent>
-    </Card>
-  );
+  if (sortedData.length > 0) {
+    return (
+      <Card className="w-full mb-4 animate-out duration-1000 mt-5">
+        <CardHeader>
+          <CardTitle>Simple Moving Average (SMA)</CardTitle>
+          <Separator />
+        </CardHeader>
+        <CardContent>
+          <AreaChart width={500} height={300} data={sortedData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="timestamp"
+              tickFormatter={(timestamp) => dateConvert(timestamp)}
+            />
+            <YAxis
+              domain={[startValue, endValue]}
+              ticks={ticks}
+              tickFormatter={(value) => `$${value}`}
+            />
+            <Tooltip
+              labelFormatter={(timestamp) => dateConvert(timestamp)}
+              formatter={(value) => [`$${value}`, "Value"]}
+            />
+            <Area
+              type="monotone"
+              dataKey="value"
+              stroke="#82ca9d"
+              fill="#82ca9d"
+            />
+          </AreaChart>
+        </CardContent>
+      </Card>
+    );
+  } else {
+    return (
+      <Card className="w-full mt-5 px-20 ">
+        <CardHeader>
+          <CardTitle>Simple Moving Average (SMA)</CardTitle>
+          <Separator />
+        </CardHeader>
+        <CardContent>
+          <p>No data available</p>
+        </CardContent>
+      </Card>
+    );
+  }
 };
 
 export default TickerStockChart;
