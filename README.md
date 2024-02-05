@@ -90,6 +90,10 @@ export  const  MIN_BEFORE_FETCHING_NEWS  =  5;
     - `ui`
       - `card.tsx`
       - `separator.tsx`
+    - `__tests__`
+      - `DailyTickersDisplay.test.tsx`
+      - `DailyTickersTable.test.tsx`
+      - `useDailyTickers.test.ts`
     - `separator.tsx`
     - `ContentTitleDisplay.tsx`
     - `DailyTickersDisplay.tsx`
