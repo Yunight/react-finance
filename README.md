@@ -37,7 +37,7 @@ The application consists of three main pages and one feature:
 
 ### Daily
 
-- Retrieves all ticker data from the previous day, as the current day's data is unavailable with the free plan.
+- Retrieves all ticker data from the previous open day ( monday - friday) data are not available during the we, as the current day's data is also unavailable with the free plan.
 - Allows filtering and navigation.
 - Datas are stored in both local storage and Redux to minimize redundant API calls and kept after refreshing the page, as the data remains unchanged until the next day.
 - on click on the button "Click here for details" we'll navigate to the page /search and load details for this particular ticker
