@@ -13,9 +13,9 @@ import {
 import axios, { CancelToken } from "axios";
 import store from "../redux/store";
 import { apiFailure } from "../redux/tickerSlice";
+import { apiKey } from "@/config/config";
 
 const BASE_URL = "https://api.polygon.io/";
-const apiKey = import.meta.env.VITE_APP_SECRET;
 
 // export async function getTickerDetails(
 //   params: SingleTickerDetailsParams
