@@ -72,7 +72,10 @@ export  const  MIN_BEFORE_FETCHING_NEWS  =  5;
 ```
 
 ## Errors handling
- - Errors are stored in redux store, and displayed with a toast 
+ - Errors are stored in redux store, and displayed with a toast
+
+## Testing 
+ - Tests are performed with Jest and React Testing Library
 
 ## Project Structure
 
@@ -87,6 +90,10 @@ export  const  MIN_BEFORE_FETCHING_NEWS  =  5;
     - `ui`
       - `card.tsx`
       - `separator.tsx`
+    - `__tests__`
+      - `DailyTickersDisplay.test.tsx`
+      - `DailyTickersTable.test.tsx`
+      - `useDailyTickers.test.ts`
     - `separator.tsx`
     - `ContentTitleDisplay.tsx`
     - `DailyTickersDisplay.tsx`
