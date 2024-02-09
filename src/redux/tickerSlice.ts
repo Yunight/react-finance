@@ -5,6 +5,8 @@ import {
   TickerNewsResultItem,
 } from "../interfaces/interfaces";
 import { ResultItem } from "../interfaces/interfaces";
+import { getTickerNews } from "@/api/polygonApi";
+import { AppDispatch } from "./store";
 
 interface TickerState {
   data: AllTickerDetails[];
@@ -129,6 +131,26 @@ const tickerSlice = createSlice({
     },
   },
 });
+
+export const fetchNewsData = () => async (dispatch: AppDispatch) => {
+  dispatch(getNewsDataStart());
+  try {
+    const res = await getTickerNews();
+    const storingTime = new Date().getTime();
+    const newsResponse = res.results;
+    localStorage.setItem(
+      "newsData",
+      JSON.stringify({ storingTime, newsResponse })
+    );
+    dispatch(getNewsDataSuccess(res.results));
+  } catch (error) {
+    if (error instanceof Error) {
+      dispatch(getNewsDataFailure(error.message));
+    } else {
+      throw error;
+    }
+  }
+};
 
 export const {
   fetchDataStart,

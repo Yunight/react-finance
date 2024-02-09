@@ -11,10 +11,13 @@ import {
   resetSma,
   selectedTicker,
   setDailyNewsFilter,
+  setNextStockValueUpdate,
   setSearchInput,
 } from "@/redux/tickerSlice";
 import { getGroupedDaily, getSma, getTickers } from "@/api/polygonApi";
 import { useNavigate } from "react-router-dom";
+import { AllTickerDetails } from "@/interfaces/interfaces";
+import { getCurrentTimePlusXMins } from "@/lib/utils";
 
 export const useDailyTickers = () => {
   const dispatch = useAppDispatch();
@@ -27,32 +30,33 @@ export const useDailyTickers = () => {
       dispatch(resetSelectedTicker());
       dispatch(resetSearchInput());
       dispatch(resetSma());
+
+      const handleData = async (result: AllTickerDetails) => {
+        dispatch(selectedTicker(result));
+        dispatch(setSearchInput(result.name));
+        dispatch(getSmaStart());
+        dispatch(setNextStockValueUpdate(getCurrentTimePlusXMins()));
+        try {
+          const smaData = await getSma(result.ticker);
+          dispatch(
+            getSmaSuccess({ results: { values: smaData.results.values } })
+          );
+        } catch (error) {
+          if (error instanceof Error) {
+            dispatch(getSmaFailure(error.message));
+          } else {
+            throw error;
+          }
+        }
+      };
+
       if (data.results.length > 1) {
         const filteredData = data.results.filter(
           (result) => result.ticker === ticker
         );
-
-        dispatch(selectedTicker(filteredData[0]));
-        dispatch(setSearchInput(filteredData[0].name));
-        dispatch(getSmaStart());
-        getSma(filteredData[0].ticker)
-          .then((data) =>
-            dispatch(
-              getSmaSuccess({ results: { values: data.results.values } })
-            )
-          )
-          .catch((error) => dispatch(getSmaFailure(error.message)));
+        handleData(filteredData[0]);
       } else {
-        dispatch(selectedTicker(data.results[0]));
-        dispatch(setSearchInput(data.results[0].name));
-        dispatch(getSmaStart());
-        getSma(data.results[0].ticker)
-          .then((data) =>
-            dispatch(
-              getSmaSuccess({ results: { values: data.results.values } })
-            )
-          )
-          .catch((error) => dispatch(getSmaFailure(error.message)));
+        handleData(data.results[0]);
       }
 
       navigate("/search");
